@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">OAChat</string>
+    <string name="nickname">昵称: </string>
+    <string name="qq_id">账号:</string>
+    <string name="age">年龄: </string>
+    <string name="birthday">生日: </string>
+    <string name="personalized_signature">电话:</string>
+    <string name="contacts">联系人</string>
+    <string name="myMessage">我的消息</string>
+    <string name="back">返回</string>
+    <string name="addPeople">添加好友</string>
+    <string name="reset_password">重设密码</string>
+</resources>

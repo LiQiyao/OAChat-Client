@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="111111111"
+        android:gravity="center"
+        android:id="@+id/message_time"
+        />
+    <RelativeLayout
+        android:id="@+id/chat_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chatto_bg_normal"
+        android:layout_below="@+id/message_time"
+        android:layout_toLeftOf="@+id/iv_chat_imagr_right"
+        android:layout_toStartOf="@+id/iv_chat_imagr_right">
+        <TextView
+            android:id="@+id/tv_me_chat_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text=""
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/chat_image"
+             />
+        <ImageView
+            android:adjustViewBounds = "true"
+            android:focusable="false"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chat_image"
+            android:layout_alignParentTop="true"
+            android:maxHeight="300dp"
+             />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/iv_chat_imagr_right"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/head"
+        android:layout_alignTop="@+id/chat_right"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="22dp" />
+
+</RelativeLayout>

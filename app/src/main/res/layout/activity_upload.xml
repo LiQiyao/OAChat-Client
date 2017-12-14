@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_marginTop="13dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/file"
+        android:id="@+id/imageView" />
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:text="1111111111111111111111111111111111111111"
+        android:textSize="20dp"
+        android:layout_marginTop="13dp"
+        android:id="@+id/name"
+        android:layout_below="@+id/imageView"
+        android:layout_alignLeft="@+id/imageView"
+        android:layout_alignStart="@+id/imageView"
+        android:gravity="center"
+        />
+    <ProgressBar
+        android:id="@+id/bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:max="100"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/name"
+        android:layout_alignLeft="@+id/name"
+        android:layout_alignStart="@+id/name" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="上传"
+        android:id="@+id/upload"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_alignBaseline="@+id/stop"
+        android:layout_alignBottom="@+id/stop"
+        android:layout_alignLeft="@+id/bar"
+        android:layout_alignStart="@+id/bar" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂停"
+        android:id="@+id/stop"
+        android:layout_below="@+id/bar"
+        android:layout_alignRight="@+id/bar"
+        android:layout_alignEnd="@+id/bar"
+        android:layout_marginRight="26dp"
+        android:layout_marginEnd="26dp"
+        android:layout_marginTop="34dp" />
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    tools:context="com.yytech.ochatclient.FirstActivity">
+    <ExpandableListView
+        android:childDivider="#E8E8E8"
+        android:groupIndicator="@null"
+        android:divider="#E8E8E8"
+        android:dividerHeight="1dp"
+        android:id="@+id/elv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
