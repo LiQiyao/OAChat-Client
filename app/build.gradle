@@ -32,6 +32,5 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     compile 'com.google.code.gson:gson:2.8.2'
     testCompile 'junit:junit:4.12'
-    compile files('F:/Trt/AndroidStudioProjects/OAchat/libs/commons-net-3.0.1.jar')
-    compile files('F:/Trt/AndroidStudioProjects/OAchat/libs/gradle-wrapper.jar')
+    compile group: 'commons-net', name: 'commons-net', version: '3.0.1'
 }
