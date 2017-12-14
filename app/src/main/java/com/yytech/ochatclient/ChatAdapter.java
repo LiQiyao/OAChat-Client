@@ -78,7 +78,7 @@ public class ChatAdapter extends BaseAdapter {
                     final int i=str.lastIndexOf(".");
                     final int j=str.lastIndexOf("/")+1;
                     //图片处理
-                    if(str.substring(i).equals(".png")) {
+                    if(str.substring(i).equals(".png")||str.substring(i).equals(".jpg")) {
                         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.chat_right);
                         layout.setBackgroundResource(R.drawable.pop_bg);
                         ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
@@ -147,7 +147,7 @@ public class ChatAdapter extends BaseAdapter {
                 int i = str1.lastIndexOf(".");
                 final int j = str1.lastIndexOf("/") + 1;
                 //图片处理
-                if (str1.substring(i).equals(".png")) {
+                if (str1.substring(i).equals(".png")||str1.substring(i).equals(".jpg")) {
                     RelativeLayout layout= (RelativeLayout) view.findViewById(R.id.chat_left);
                     layout.setBackgroundResource(R.drawable.pop_bg);
                     File file=new File(getSDPath()+"/OAChat/DownLoad/"+str1.substring(j));
