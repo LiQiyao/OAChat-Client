@@ -41,6 +41,7 @@ public class DownLoadActivity extends Activity {
     private Button openPath;
     private ProgressBar bar;
     private static boolean isBreak=false;
+    private static File file;
     public String getSDPath(){
         File sdDir = null;
         boolean sdCardExist = Environment.getExternalStorageState()
@@ -79,17 +80,18 @@ public class DownLoadActivity extends Activity {
             }
         };
         if (!intent.getStringExtra("status").equals("myFile")) {
-            File file = new File(path + "/" + ftpFileName);
-            if (file.exists()) {
+            File file1 = new File(path + "/" + ftpFileName);
+            if (file1.exists()) {
                 downLoad.setVisibility(View.GONE);
                 stop.setVisibility(View.GONE);
                 bar.setVisibility(View.GONE);
                 openPath.setVisibility(View.VISIBLE);
+                file=file1;
             }
             openPath.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    File file = new File(path + "/" + ftpFileName);
+                    System.out.println("===click");
                     CallOtherOpeanFile otherOpeanFile = new CallOtherOpeanFile();
                     otherOpeanFile.openFile(DownLoadActivity.this, file);
 //                Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -100,17 +102,25 @@ public class DownLoadActivity extends Activity {
             });
         }
         else {
-            File file = new File(strLocalFile);
-            if (file.exists()) {
+            File file1= new File(strLocalFile);
+            File file2=new File(getSDPath()+"/OAChat/DownLoad/"+ftpFileName);
+            if (file1.exists()) {
                 downLoad.setVisibility(View.GONE);
                 stop.setVisibility(View.GONE);
                 bar.setVisibility(View.GONE);
                 openPath.setVisibility(View.VISIBLE);
+                file=file1;
+            }
+            else if (file2.exists()){
+                downLoad.setVisibility(View.GONE);
+                stop.setVisibility(View.GONE);
+                bar.setVisibility(View.GONE);
+                openPath.setVisibility(View.VISIBLE);
+                file=file2;
             }
             openPath.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    File file = new File(strLocalFile);
                     CallOtherOpeanFile otherOpeanFile = new CallOtherOpeanFile();
                     otherOpeanFile.openFile(DownLoadActivity.this, file);
                 }

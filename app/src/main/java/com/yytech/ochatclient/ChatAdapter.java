@@ -69,7 +69,8 @@ public class ChatAdapter extends BaseAdapter {
             view=View.inflate(context, R.layout.item_chat_right, null);
             TextView msgTime= (TextView) view.findViewById(R.id.message_time);
             SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");
-            Date date=new Date(chatLog.getReceiverId());
+            Date date=new Date(chatLog.getSendTime());
+            System.out.println("===date"+chatLog.getSendTime());
             String lStrDate = lsdFormat.format(date);
             msgTime.setText(lStrDate);
             if (chatLog.getContentType()== Const.ChatLogContentType.FILE)
@@ -139,7 +140,7 @@ public class ChatAdapter extends BaseAdapter {
             view=View.inflate(context,R.layout.item_chat_left,null);
             TextView msgTime= (TextView) view.findViewById(R.id.message_time);
             SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");
-            Date date=new Date(chatLog.getReceiverId());
+            Date date=new Date(chatLog.getSendTime());
             String lStrDate = lsdFormat.format(date);
             msgTime.setText(lStrDate);
             if (chatLog.getContentType()== Const.ChatLogContentType.FILE) {

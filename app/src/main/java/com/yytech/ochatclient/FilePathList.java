@@ -75,11 +75,15 @@ public class FilePathList extends Activity{
             @Override
             public void onClick(View v) {
                 try {
-                    if (!currentParent.getCanonicalPath().equals("/mnt/sdcard"));
-                    {
-                        currentParent=currentParent.getParentFile();
-                        currentFiles=currentParent.listFiles();
-                        inflateListView(currentFiles);
+                    if (currentParent.getParentFile().getCanonicalPath().equals("/mnt"))
+                        finish();
+                    else {
+                        if (!currentParent.getCanonicalPath().equals("/mnt/sdcard")) {
+                            System.out.println("===" + currentParent.getCanonicalPath());
+                            currentParent = currentParent.getParentFile();
+                            currentFiles = currentParent.listFiles();
+                            inflateListView(currentFiles);
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

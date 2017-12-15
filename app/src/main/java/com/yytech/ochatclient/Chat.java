@@ -54,6 +54,8 @@ public class Chat extends Activity {
                 chatLog.setSenderId(myId);
                 chatLog.setContentType(Const.ChatLogContentType.FILE);
                 chatLog.setReceiverId(friendId);
+                Long date=System.currentTimeMillis();
+                chatLog.setSendTime(date);
                 //得到发送内容
                 chatLog.setContent(msg.getData().getString("strLocalFile"));
                 //加入集合
@@ -186,6 +188,8 @@ public class Chat extends Activity {
                 chatLog.setContentType(Const.ChatLogContentType.TEXT);
                 //得到发送内容
                 chatLog.setContent(et_chat_message.getText().toString());
+                Long date=System.currentTimeMillis();
+                chatLog.setSendTime(date);
                 //加入集合
                 MessageDTO<ChatLog> sendChatLog = new MessageDTO<ChatLog>();
                 sendChatLog.setSign(Const.Sign.REQUEST);
