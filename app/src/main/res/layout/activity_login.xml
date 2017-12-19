@@ -60,5 +60,5 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:src="@drawable/ensure" />
+        android:src="@drawable/ensure_selector" />
 </LinearLayout>

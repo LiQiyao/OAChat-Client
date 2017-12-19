@@ -25,6 +25,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.yytech.ochatclient.R.id.person_info_address;
+import static com.yytech.ochatclient.R.id.person_info_tel;
 
 /**
  * Created by admin on 2017/12/17.
@@ -52,10 +53,12 @@ public class FPersonInfo extends Fragment implements Const.Status{
         TextView nickNameText = (TextView) view.findViewById(R.id.person_info_nickname);
         TextView genderText = (TextView) view.findViewById(R.id.person_info_gender);
         TextView addressText = (TextView) view.findViewById(person_info_address);
+        TextView telText = (TextView) view.findViewById(person_info_tel);
 
         nickNameText.setText(loginMsg.getData().getSelf().getNickName());
         genderText.setText(loginMsg.getData().getSelf().getGender());
         addressText.setText(loginMsg.getData().getSelf().getAddress());
+        telText.setText(loginMsg.getData().getSelf().getTelephoneNumber());
 
         TextView cancellationView = (TextView) view.findViewById(R.id.person_info_cancellation);
         cancellationView.setOnClickListener(new View.OnClickListener() {
