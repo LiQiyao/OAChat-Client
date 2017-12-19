@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:text="返回"
+                android:textColor="@color/qq_text_color"
                 />
         </LinearLayout>
         <TextView
@@ -113,7 +114,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="end"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/person_info_6"/>
+                    android:src="@drawable/person_info_6_edit"/>
             </LinearLayout>
         </LinearLayout>
         <ImageView
@@ -180,7 +181,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/person_info_6"/>
+                    android:src="@drawable/person_info_6_edit"/>
             </LinearLayout>
         </LinearLayout>
         <ImageView
@@ -208,7 +209,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/person_info_6"/>
+                    android:src="@drawable/person_info_6_edit"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -275,7 +276,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/person_info_6"/>
+                    android:src="@drawable/person_info_6_edit"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -304,7 +305,7 @@
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/person_info_6"/>
+                    android:src="@drawable/person_info_6_edit"/>
             </LinearLayout>
         </LinearLayout>
         <ImageView

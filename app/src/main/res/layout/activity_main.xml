@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:oachat="http://schemas.android.com/apk/res/com.yytech.ochatclient"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.yytech.ochatclient.oaview.SlidingMenu
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        oachat:rightPadding="63dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/main"
+                >
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <FrameLayout
+                    android:id="@+id/main_relative"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#EEEEEE"
+                    >
+                </FrameLayout>
+
+
+
+
+                <include layout="@layout/buttom_navigation"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </com.yytech.ochatclient.oaview.SlidingMenu>
+
+
+</LinearLayout>

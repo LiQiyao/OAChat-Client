@@ -4,39 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="185dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/person_info_bg1">
         <LinearLayout
-            android:id="@+id/add_people_backLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:onClick="back"
             >
-            <ImageView
-                android:id="@+id/add_people_backImgView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/left"
-                android:layout_marginRight="2dp"
-
-                />
             <TextView
-                android:id="@+id/add_people_textView"
+                android:id="@+id/person_info_cancellation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="返回"
+                android:text="注销"
+                android:textSize="16sp"
+                android:textColor="@color/qq_text_color"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
                 />
+
         </LinearLayout>
+
 
     </LinearLayout>
 
@@ -46,7 +39,7 @@
         android:layout_marginTop="-45dp"
         android:orientation="vertical">
 
-        <com.itee.oachat.oaview.RoundImageView
+        <com.yytech.ochatclient.oaview.RoundImageView
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
@@ -59,7 +52,7 @@
             android:layout_marginTop="-90dp"
             android:background="@drawable/person_info_headborder" />
 
-        <com.ruffian.library.RTextView
+        <TextView
             android:id="@+id/person_info_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -68,6 +61,7 @@
             android:text="-浮生若梦°"
             android:textColor="#000"
             android:textSize="23sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="30dp"
@@ -88,12 +82,12 @@
                 android:layout_height="15dp"
                 android:src="@drawable/person_info_5" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:onClick="personInfoToEdit"
-            >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -128,6 +122,7 @@
                     android:src="@drawable/person_info_2" />
 
                 <TextView
+                    android:id="@+id/person_info_gender"
                     style="@style/personinfo_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -135,6 +130,7 @@
                     android:text="男" />
 
                 <TextView
+                    android:id="@+id/person_info_age"
                     style="@style/personinfo_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -147,6 +143,7 @@
                     android:text="天蝎座" />
 
                 <TextView
+                    android:id="@+id/person_info_address"
                     style="@style/personinfo_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -155,17 +152,16 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:gravity="center_vertical"
-                    >
+                    android:orientation="vertical">
+
                     <ImageView
                         android:id="@+id/person_info_rightimg"
                         android:layout_width="17dp"
                         android:layout_height="17dp"
                         android:layout_gravity="right"
-                        android:src="@drawable/person_info_6"
                         android:layout_marginRight="5dp"
-                        />
+                        android:src="@drawable/person_info_6" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -194,14 +190,6 @@
             android:layout_height="166dp"
             android:src="@drawable/person_info_4" />
 
-
-        <ImageButton
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:src="@drawable/modify_button"
-            android:onClick="personInfoToEdit"
-            />
 
     </LinearLayout>
 

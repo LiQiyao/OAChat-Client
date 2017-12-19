@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +14,12 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
-import com.yytech.ochatclient.util.GsonUtil;
+
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.tcpconnection.TCPClient;
+import com.yytech.ochatclient.util.GsonUtil;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -29,7 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements Const.Status{
     EditText loginNameEdit;
     EditText passwordEdit;
     ImageView ensureImage;
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent intent=new Intent(context,MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                             Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    Bundle bundle=  msg.getData();
+                    Bundle bundle = msg.getData();
                     intent.putExtras(bundle);
                     context.startActivity(intent);
                 }
@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                                 MessageDTO messageDTO = GsonUtil.getInstance().fromJson(result, MessageDTO.class);
                                 System.out.println("=====================服务器返回的信息：：" + result);
                                 System.out.println("==========" + messageDTO.getStatus());
-                                if(messageDTO.getStatus() == 1){
+                                if(messageDTO.getStatus() == SUCCESS){
 
                                     //处理token， userId
                                     editor.putString("userId",messageDTO.getUserId().toString());
