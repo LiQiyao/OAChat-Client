@@ -39,11 +39,11 @@
              />
     </RelativeLayout>
 
-    <ImageView
+    <com.yytech.ochatclient.oaview.XCRoundImageView
         android:id="@+id/iv_chat_imagr_right"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/head"
+        android:src="@drawable/mine_avatar"
         android:layout_alignTop="@+id/chat_right"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

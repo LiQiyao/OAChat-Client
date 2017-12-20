@@ -1,11 +1,10 @@
-package com.yytech.ochatclient;
+package com.yytech.ochatclient.oaview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.PorterDuff.Mode;
+import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
@@ -65,7 +64,7 @@ public class XCRoundImageView extends ImageView {
      */
     private Bitmap getCircleBitmap(Bitmap bitmap, int pixels) {
         Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-                bitmap.getHeight(), Config.ARGB_8888);
+                bitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(output);
 
         final int color = 0xff424242;
@@ -77,7 +76,7 @@ public class XCRoundImageView extends ImageView {
         int x = bitmap.getWidth();
 
         canvas.drawCircle(x / 2, x / 2, x / 2, paint);
-        paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
         return output;
 

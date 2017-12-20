@@ -1,20 +1,18 @@
 package com.yytech.ochatclient;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.yytech.ochatclient.dto.MessageDTO;
-import com.yytech.ochatclient.dto.data.ChatLogListDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.UserDetailDTO;
 import com.yytech.ochatclient.dto.data.UserInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +24,8 @@ public class FContactList extends android.support.v4.app.Fragment {
     private MessageDTO<LoginResultDTO> loginMsg;
     private List<UserDetailDTO> friendList;
     private UserInfo userInfo;
+    private TextView contactAddText;
+
 //    @Override
 //    public void onAttach(Context context) {
 //        super.onAttach(context);
@@ -37,11 +37,20 @@ public class FContactList extends android.support.v4.app.Fragment {
         /* 1.1 创建一个adapter实例*/
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        Bundle bundle=getArguments();
+        final Bundle bundle=getArguments();
         loginMsg= (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
         friendList=loginMsg.getData().getFriendList();
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
         View view=inflater.inflate(R.layout.f_contact_list,container,false);
+        contactAddText = (TextView) view.findViewById(R.id.contact_add);
+        contactAddText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),AddPeople.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }
+        });
 
         MyExpandableListViewAdapter adapter = new MyExpandableListViewAdapter(friendList,getActivity());
 

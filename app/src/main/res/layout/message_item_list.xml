@@ -12,7 +12,7 @@
         android:layout_height="60dp"
         android:gravity="center_vertical"
         android:layout_marginLeft="10dp">
-        <com.itee.oachat.oaview.XCRoundImageView
+        <com.yytech.ochatclient.oaview.XCRoundImageView
             android:id="@+id/headview"
             android:layout_width="50dp"
             android:layout_height="50dp"

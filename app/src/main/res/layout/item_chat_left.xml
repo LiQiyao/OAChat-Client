@@ -10,12 +10,12 @@
         android:gravity="center"
         android:id="@+id/message_time"
         />
-    <ImageView
+    <com.yytech.ochatclient.oaview.XCRoundImageView
         android:id="@+id/ivicon"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_gravity="top"
-        android:src="@drawable/head"
+        android:src="@drawable/mine_avatar"
         android:layout_marginTop="28dp"
         android:layout_below="@+id/message_time"
         android:layout_alignParentLeft="true"

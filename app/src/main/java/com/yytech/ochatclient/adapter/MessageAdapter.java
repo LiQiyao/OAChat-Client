@@ -10,7 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.yytech.ochatclient.R;
-import com.yytech.ochatclient.XCRoundImageView;
+import com.yytech.ochatclient.oaview.XCRoundImageView;
+
 import java.util.List;
 import java.util.Map;
 
