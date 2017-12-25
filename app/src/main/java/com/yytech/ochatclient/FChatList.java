@@ -57,10 +57,7 @@ public class FChatList extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),AddPeople.class);
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("token",loginMsg.getToken());
-                bundle1.putLong("userId",loginMsg.getUserId());
-                intent.putExtras(bundle1);
+                intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }
         });

@@ -19,10 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
-import com.yytech.ochatclient.adapter.MessageAdapter;
+import com.yytech.ochatclient.adapter.AddPeopleAdapter;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.FoundUsersDTO;
+import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.UserDetailDTO;
 import com.yytech.ochatclient.util.GsonUtil;
 
@@ -47,6 +48,7 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
     private EditText searchedit;
     private HttpURLConnection conn;
     private Handler handler;
+    private MessageDTO<LoginResultDTO> loginMsg;
     public String IP=Const.IP;
     public int HTTP_PORT=Const.HTTP_PORT;
 
@@ -63,8 +65,8 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
                 if (msg.what == 0x123){
                     //得到索搜结果
                     listView = (ListView) findViewById(R.id.add_people_listview);
-                    MessageAdapter messageAdapter = new MessageAdapter(AddPeople.this,data,"添加");
-                    listView.setAdapter(messageAdapter);
+                    AddPeopleAdapter addPeopleAdapter = new AddPeopleAdapter(AddPeople.this,data,msg.getData());
+                    listView.setAdapter(addPeopleAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -113,16 +115,16 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
 
         //发送请求
         new Thread(new Runnable() {
-            Bundle bundle = getIntent().getExtras();
-            String token = bundle.getString("token");
-            long userId = bundle.getLong("userId");
-            String key = searchedit.getText().toString();
             @Override
             public void run() {
                 try {
+                    Bundle bundle = getIntent().getExtras();
+                    loginMsg = (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
+                    String key = searchedit.getText().toString();
+                    bundle.putString("key",key);
                     //1：url对象
                     URL url = new URL("http://"+IP+":"+HTTP_PORT+"/api/users/find?"
-                            +"key=" +key+"&token="+token+ "&userId=" +userId);
+                            +"key=" +key+"&token="+loginMsg.getToken()+ "&userId=" +loginMsg.getUserId());
 
                     conn = (HttpURLConnection) url.openConnection();
                     conn.setRequestMethod("GET");
@@ -161,7 +163,11 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
                             //加载数据到布局
                             List<UserDetailDTO> userDetailDTOList = foundUsersDTO.getUsers();
                             data = getData(userDetailDTOList);//*************得到数据
-                            handler.sendEmptyMessage(0x123);
+                            Message msg = new Message();
+                            msg.what = 0x123;
+                            msg.setData(bundle);
+                            handler.sendMessage(msg);
+
                         }else {
                             System.out.println("===没有找到好友！");
                         }
@@ -176,8 +182,6 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
                 }
             }
         }).start();
-
-
     }
 
 
@@ -198,6 +202,7 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
             map.put("imgid", R.drawable.mine_avatar);
             map.put("title", userDetailDTO.getNickName());
             map.put("info", userDetailDTO.getTelephoneNumber());
+            map.put("toUserId",userDetailDTO.getId());
             list.add(map);
         }
         return list;

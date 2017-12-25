@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.yytech.ochatclient.dto.MessageDTO;
@@ -25,6 +26,7 @@ public class FContactList extends android.support.v4.app.Fragment {
     private List<UserDetailDTO> friendList;
     private UserInfo userInfo;
     private TextView contactAddText;
+    private LinearLayout newpeopleLinear;
 
 //    @Override
 //    public void onAttach(Context context) {
@@ -42,6 +44,8 @@ public class FContactList extends android.support.v4.app.Fragment {
         friendList=loginMsg.getData().getFriendList();
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
         View view=inflater.inflate(R.layout.f_contact_list,container,false);
+
+        //添加按钮事件
         contactAddText = (TextView) view.findViewById(R.id.contact_add);
         contactAddText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +55,20 @@ public class FContactList extends android.support.v4.app.Fragment {
                 getActivity().startActivity(intent);
             }
         });
+
+        //新朋友点击事件
+        newpeopleLinear = (LinearLayout) view.findViewById(R.id.f_contact_new_people_linear);
+        newpeopleLinear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),NewPeople.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }
+        });
+
+
+
 
         MyExpandableListViewAdapter adapter = new MyExpandableListViewAdapter(friendList,getActivity());
 

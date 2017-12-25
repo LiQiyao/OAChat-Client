@@ -11,23 +11,6 @@
         android:layout_height="185dp"
         android:orientation="horizontal"
         android:background="@drawable/person_info_bg1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            >
-            <TextView
-                android:id="@+id/person_info_cancellation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="注销"
-                android:textSize="16sp"
-                android:textColor="@color/textcolor_selector"
-                android:layout_gravity="right"
-                android:layout_marginRight="15dp"
-                />
-        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -83,7 +66,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="personInfoToEdit"
             android:orientation="vertical">
 
             <LinearLayout

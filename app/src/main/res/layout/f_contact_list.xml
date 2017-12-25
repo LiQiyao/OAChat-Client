@@ -68,6 +68,7 @@
 
 
     <LinearLayout
+        android:id="@+id/f_contact_new_people_linear"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_marginTop="10dp"
@@ -99,7 +100,7 @@
                 android:layout_height="25dp"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="5dp"
-                android:src="@mipmap/right_point" />
+                android:src="@drawable/person_info_6_edit" />
         </LinearLayout>
     </LinearLayout>
 

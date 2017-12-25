@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.common.Const;
@@ -32,12 +33,12 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     private MessageDTO<OnlineDTO> onlineMsg;
-    private static MessageDTO<LoginResultDTO> loginMsg;
+    public static MessageDTO<LoginResultDTO> loginMsg;
     private List<ChatLogListDTO> chatList;
     private List<UserDetailDTO> friendList;
     private UserInfo userInfo;
     private HttpURLConnection conn;
-    private Handler handler;
+    public static Handler handler;
     private static String IP= Const.IP;
     private static int HTTP_PORT=Const.HTTP_PORT;
     Intent intent;
@@ -55,6 +56,9 @@ public class MainActivity extends FragmentActivity {
                 super.handleMessage(msg);
                 if (msg.what==0x123)
                     ChangeTab(0);
+                if (msg.what == 0x234){
+                    Toast.makeText(getApplicationContext(),"收到一条好友请求！",Toast.LENGTH_SHORT).show();
+                }
             }
         };
 
@@ -171,7 +175,7 @@ public class MainActivity extends FragmentActivity {
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_press);
 //            tag.setText("设置");
-            FPersonInfo fragment= new FPersonInfo();
+            FEditPersonInfo fragment= new FEditPersonInfo();
             Bundle bundle = new Bundle();
             bundle.putSerializable("loginMsg",loginMsg);//这里的values就是我们要传的值
             bundle.putSerializable("userInfo",userInfo);
@@ -180,11 +184,6 @@ public class MainActivity extends FragmentActivity {
             transaction.commit();
             System.out.println("===loginMsg" + i);
         }
-    }
-
-    public void personInfoToEdit(View source){
-        Intent intent = new Intent(this,EditPersonInfoActivity.class);
-        startActivity(intent);
     }
 
 }

@@ -24,16 +24,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.yytech.ochatclient.R.id.person_info_address;
-import static com.yytech.ochatclient.R.id.person_info_tel;
-
 /**
  * Created by admin on 2017/12/17.
  */
 
-public class FPersonInfo extends Fragment implements Const.Status{
+public class FEditPersonInfo extends Fragment implements Const.Status{
     private MessageDTO<LoginResultDTO> loginMsg;
-    private static String IP=Const.IP;
+    private static String IP= Const.IP;
     private static int HTTP_PORT=Const.HTTP_PORT;
     private HttpURLConnection conn;
 
@@ -49,24 +46,19 @@ public class FPersonInfo extends Fragment implements Const.Status{
         Bundle bundle=getArguments();
         loginMsg= (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
 
-        View view = inflater.inflate(R.layout.activity_person_info,container,false);
-        TextView nickNameText = (TextView) view.findViewById(R.id.person_info_nickname);
-        TextView genderText = (TextView) view.findViewById(R.id.person_info_gender);
-        TextView addressText = (TextView) view.findViewById(person_info_address);
-        TextView telText = (TextView) view.findViewById(person_info_tel);
+        View view = inflater.inflate(R.layout.activity_edit_person_info,container,false);
 
-        nickNameText.setText(loginMsg.getData().getSelf().getNickName());
-        genderText.setText(loginMsg.getData().getSelf().getGender());
-        addressText.setText(loginMsg.getData().getSelf().getAddress());
-        telText.setText(loginMsg.getData().getSelf().getTelephoneNumber());
+//        EditText editText = (EditText) view.findViewById(R.id.edit_personinfo_nickname);
+//        editText.setText(loginMsg.getData().getSelf().getNickName());
+//        EditText editText1 = (EditText) view.findViewById(R.id.edit_personinfo_gender);
+//        editText1.setText(loginMsg.getData().getSelf().getGender());
 
-        TextView cancellationView = (TextView) view.findViewById(R.id.person_info_cancellation);
+
+        TextView cancellationView = (TextView)view.findViewById(R.id.person_info_cancellation);
         cancellationView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final LocalUtil localUtil = new LocalUtil();
-                final String userId = localUtil.getUserId(getActivity());
-                final String token = localUtil.getToken(getActivity());
 
                 System.out.println("===cancellationView on click!");
 
@@ -122,7 +114,6 @@ public class FPersonInfo extends Fragment implements Const.Status{
                 }).start();
             }
         });
-
 
 
 

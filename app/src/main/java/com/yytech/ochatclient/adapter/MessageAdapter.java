@@ -9,8 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yytech.ochatclient.MainActivity;
 import com.yytech.ochatclient.R;
+import com.yytech.ochatclient.common.Const;
+import com.yytech.ochatclient.dto.MessageDTO;
+import com.yytech.ochatclient.dto.data.AddFriendResponseDTO;
 import com.yytech.ochatclient.oaview.XCRoundImageView;
+import com.yytech.ochatclient.tcpconnection.TCPClient;
 
 import java.util.List;
 import java.util.Map;
@@ -20,11 +25,10 @@ import java.util.Map;
  */
 
 public class MessageAdapter extends BaseAdapter{
-
     private LayoutInflater mInflater = null;
-    List<Map<String,Object>> data;
-    String buttonString;
-    Context context;
+    private List<Map<String,Object>> data;
+    private String buttonString;
+    private Context context;
     static class ViewHolder{
         public XCRoundImageView headview;
         public TextView title;
@@ -72,6 +76,18 @@ public class MessageAdapter extends BaseAdapter{
             holder.agree.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    MessageDTO<AddFriendResponseDTO> addResponseMsg = new MessageDTO<AddFriendResponseDTO>();
+                    AddFriendResponseDTO addFriendResponseDTO = new AddFriendResponseDTO();
+                    addResponseMsg.setData(addFriendResponseDTO);
+                    addResponseMsg.setDataName("addFriendResponseDTO");
+                    addResponseMsg.setToken(MainActivity.loginMsg.getToken());
+                    addResponseMsg.setUserId(MainActivity.loginMsg.getUserId());
+                    addResponseMsg.setSign(Const.Sign.REQUEST);
+
+                    TCPClient.getInstance().connect();
+                    TCPClient.getInstance().sendMessage(addResponseMsg);
+                    System.out.println("====发送接受对方的好友请求：【"+addResponseMsg+"】");
+
                     Toast.makeText(context,"第"+position+"个添加成功！",Toast.LENGTH_SHORT).show();
                 }
             });
@@ -81,8 +97,8 @@ public class MessageAdapter extends BaseAdapter{
             holder = (ViewHolder) convertView.getTag();
         }
         holder.headview.setImageResource((Integer) data.get(position).get("imgid"));
-        holder.title.setText((String) data.get(position).get("title"));
-        holder.info.setText((String)data.get(position).get("info"));
+        holder.title.setText((String) data.get(position).get("nickname"));
+        holder.info.setText((String)data.get(position).get("gender"));
         holder.agree.setText(buttonString);
         return convertView;
     }
