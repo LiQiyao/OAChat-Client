@@ -1,13 +1,16 @@
 package com.yytech.ochatclient;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.yytech.ochatclient.adapter.MessageAdapter;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.AddFriendRequestDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
+import com.yytech.ochatclient.dto.data.OnlineDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +26,9 @@ import java.util.List;
 import java.util.Map;
 
 public class NewPeople extends AppCompatActivity {
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private LinearLayout backLayout;
     private ListView listView;
     private MessageAdapter messageAdapter;
     private ImageView addImageview ;
@@ -30,6 +37,8 @@ public class NewPeople extends AppCompatActivity {
     public MessageDTO<LoginResultDTO> loginMsg;
     public  MessageDTO<AddFriendRequestDTO> addFriendRequestMsg;
     public static Handler handler;
+    private String tag = "==NewPeople.java";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +47,7 @@ public class NewPeople extends AppCompatActivity {
         setContentView(R.layout.activity_new_people);
 
         Bundle bundle1 = getIntent().getExtras();
-        loginMsg = (MessageDTO<LoginResultDTO>) bundle1.getSerializable("loginMsg");
+        loginMsg = MainActivity.loginMsg;
         data = new ArrayList<Map<String, Object>>();
         addFriendRequestList = loginMsg.getData().getAddFriendRequestList();
 
@@ -54,11 +63,21 @@ public class NewPeople extends AppCompatActivity {
                     AddFriendRequestDTO addFriendRequestDTO = addFriendRequestMsg.getData();
                     Toast.makeText(getApplicationContext(),"收到一条好友请求！",Toast.LENGTH_SHORT).show();
 
+                    addFriendRequestList = MainActivity.loginMsg.getData().getAddFriendRequestList();
+                    Log.i(tag,"addFriendRequestList.size :"+addFriendRequestList.size());
                     for (int i = 0;i < addFriendRequestList.size();i++){
                         System.out.println("=====好友请求id"+addFriendRequestList.get(i).getFromUserId());
                     }
                     addItem(null, String.valueOf(addFriendRequestDTO.getFromNickName()),addFriendRequestDTO.getFromGender());
                     System.out.println("====更新新朋友界面");
+                }
+                if(msg.what == 0x666){
+                    listView = (ListView) findViewById(R.id.message_listview);
+                    getDate();
+                    messageAdapter = new MessageAdapter(NewPeople.this,data);
+                    listView.setAdapter(messageAdapter);
+                    Toast.makeText(NewPeople.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
+                    onBackPressed();
                 }
             }
         };
@@ -66,31 +85,45 @@ public class NewPeople extends AppCompatActivity {
 
     }
 
+    private void getDate(){
+        data.clear();
+        Map<String, Object> map;
+        for(int i=0;i<addFriendRequestList.size();i++)
+        {
+            map = new HashMap<String, Object>();
+            map.put("toUserId",addFriendRequestList.get(i).getToUserId());
+            map.put("fromUserId",addFriendRequestList.get(i).getFromUserId());
+            map.put("imgid", R.drawable.mine_avatar);
+            map.put("nickname", addFriendRequestList.get(i).getFromNickName());
+            map.put("gender", addFriendRequestList.get(i).getFromGender());
+            map.put("accepted",addFriendRequestList.get(i).getAccepted());
+            data.add(map);
+        }
+    }
+
 
     //初始化
     public void init(){
 
+        backLayout = (LinearLayout) findViewById(R.id.new_people_back_layout);
         //得到好友消息
         listView = (ListView) findViewById(R.id.message_listview);
 
         Map<String, Object> map;
         if(addFriendRequestList != null){
-            for(int i=0;i<addFriendRequestList.size();i++)
-            {
-                map = new HashMap<String, Object>();
-                map.put("toUserId",addFriendRequestList.get(i).getToUserId());
-                map.put("fromUserId",addFriendRequestList.get(i).getFromUserId());
-                map.put("imgid", R.drawable.mine_avatar);
-                map.put("nickname", addFriendRequestList.get(i).getFromNickName());
-                map.put("gender", addFriendRequestList.get(i).getFromGender());
-                data.add(map);
-            }
-            messageAdapter = new MessageAdapter(NewPeople.this,data,"同意");
+            getDate();
+            messageAdapter = new MessageAdapter(NewPeople.this,data);
             listView.setAdapter(messageAdapter);
         }else {
             Toast.makeText(this,"好友请求为空！",Toast.LENGTH_SHORT).show();
         }
 
+        backLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,9 +152,6 @@ public class NewPeople extends AppCompatActivity {
 
     }
 
-
-
-
     public void addItem(String image,String nickname,String gender)
     {
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -132,17 +162,43 @@ public class NewPeople extends AppCompatActivity {
                 map.put("imgid", R.drawable.mayknow_head);
                 map.put("nickname", addFriendRequestList.get(i).getFromNickName());
                 map.put("gender", addFriendRequestList.get(i).getFromGender());
+                map.put("accepted",false);
                 data.add(map);
             }
-            messageAdapter = new MessageAdapter(NewPeople.this,data,"同意");
+            messageAdapter = new MessageAdapter(NewPeople.this,data);
+            listView.setAdapter(messageAdapter);
         }else{
             map.put("imgid", R.drawable.mayknow_head);
             map.put("nickname", nickname);
             map.put("gender", gender);
+            map.put("accepted",false);
             data.add(map);
-            messageAdapter.notifyDataSetChanged();
+            messageAdapter = new MessageAdapter(NewPeople.this,data);
+            listView.setAdapter(messageAdapter);
         }
     }
+
+    public void onBackPressed() {
+        Intent intent=new Intent(NewPeople.this,MainActivity.class);
+        Bundle bundle=new Bundle();
+        preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);
+        editor = preferences.edit();
+        String userId = preferences.getString("userId",null);
+        String token = preferences.getString("token",null);
+        MessageDTO<OnlineDTO> onlineMsg=new MessageDTO<OnlineDTO>();
+        onlineMsg.setToken(token);
+        onlineMsg.setUserId(Long.valueOf(userId));
+        bundle.putSerializable("onlineMsg",onlineMsg);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
+    }
+
+
+
+
+
+
 
 
 }

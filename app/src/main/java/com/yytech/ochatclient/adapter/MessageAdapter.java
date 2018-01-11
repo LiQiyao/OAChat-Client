@@ -1,13 +1,14 @@
 package com.yytech.ochatclient.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yytech.ochatclient.MainActivity;
 import com.yytech.ochatclient.R;
@@ -19,12 +20,15 @@ import com.yytech.ochatclient.tcpconnection.TCPClient;
 
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Created by admin on 2017/11/24.
  */
 
 public class MessageAdapter extends BaseAdapter{
+    String tag = "==MessageAdapter";
+    Logger logger = Logger.getLogger("MessageAdapter");
     private LayoutInflater mInflater = null;
     private List<Map<String,Object>> data;
     private String buttonString;
@@ -37,13 +41,12 @@ public class MessageAdapter extends BaseAdapter{
     }
 
 
-    public MessageAdapter(Context context, List<Map<String, Object>> data , String buttonString)
+    public MessageAdapter(Context context, List<Map<String, Object>> data)
     {
         this.context = context;
         //根据context上下文加载布局，这里的是MainActivity本身，即this
         this.mInflater = LayoutInflater.from(context);
         this.data = data;
-        this.buttonString = buttonString;
     }
 
     @Override
@@ -83,12 +86,15 @@ public class MessageAdapter extends BaseAdapter{
                     addResponseMsg.setToken(MainActivity.loginMsg.getToken());
                     addResponseMsg.setUserId(MainActivity.loginMsg.getUserId());
                     addResponseMsg.setSign(Const.Sign.REQUEST);
+                    addFriendResponseDTO.setAccepted(true);
+                    addFriendResponseDTO.setToUserId((Long) data.get(position).get("toUserId"));
+                    addFriendResponseDTO.setFromUserId((Long) data.get(position).get("fromUserId"));
+                    logger.info("====messageAdapter的data："+data+" === toUserId:"+data.get(position).get("toUserId"));
 
                     TCPClient.getInstance().connect();
                     TCPClient.getInstance().sendMessage(addResponseMsg);
                     System.out.println("====发送接受对方的好友请求：【"+addResponseMsg+"】");
 
-                    Toast.makeText(context,"第"+position+"个添加成功！",Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -99,7 +105,19 @@ public class MessageAdapter extends BaseAdapter{
         holder.headview.setImageResource((Integer) data.get(position).get("imgid"));
         holder.title.setText((String) data.get(position).get("nickname"));
         holder.info.setText((String)data.get(position).get("gender"));
-        holder.agree.setText(buttonString);
+        Log.i(tag,"== 1"+data.get(position).get("accepted")+"");
+        if( (data.get(position).get("accepted")) == null || !(boolean) (data.get(position).get("accepted"))){
+            holder.agree.setText("同意");
+            holder.agree.setBackgroundResource(R.color.button_bg);
+            holder.agree.setFocusable(true);
+            holder.agree.setClickable(true);
+        } else {
+            holder.agree.setText("已同意");
+            holder.agree.setBackgroundColor(Color.GRAY);
+            holder.agree.setFocusable(false);
+            holder.agree.setClickable(false);
+        }
+
         return convertView;
     }
 }

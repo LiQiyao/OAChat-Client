@@ -64,6 +64,7 @@ public class FContactList extends android.support.v4.app.Fragment {
                 Intent intent = new Intent(getContext(),NewPeople.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
+                getActivity().finish();
             }
         });
 

@@ -6,6 +6,7 @@
     android:paddingRight="12dp">
 
     <LinearLayout
+        android:id="@+id/new_people_back_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

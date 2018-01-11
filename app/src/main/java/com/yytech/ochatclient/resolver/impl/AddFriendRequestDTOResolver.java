@@ -3,6 +3,7 @@ package com.yytech.ochatclient.resolver.impl;
 
 import android.os.Bundle;
 import android.os.Message;
+import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.MainActivity;
@@ -24,9 +25,10 @@ public class AddFriendRequestDTOResolver implements DataResolver {
         Type objectType = new TypeToken<MessageDTO<AddFriendRequestDTO>>(){}.getType();
         final MessageDTO<AddFriendRequestDTO> addFriendRequestMsg = GsonUtil.getInstance().fromJson(jsonMessage, objectType);
         final AddFriendRequestDTO addFriendRequestDTO = addFriendRequestMsg.getData();
-
-        System.out.println("====收到消息发送好友请求的消息："+ addFriendRequestDTO);
+        Log.i("==1==AddFriendRequestDTOResolver.java",MainActivity.loginMsg.getData().getAddFriendRequestList().size()+"");
         MainActivity.loginMsg.getData().getAddFriendRequestList().add(addFriendRequestDTO);
+        Log.i("==2==AddFriendRequestDTOResolver.java",MainActivity.loginMsg.getData().getAddFriendRequestList().size()+"");
+        System.out.println("====收到消息发送好友请求的消息："+ addFriendRequestDTO+" ==accepted:"+addFriendRequestDTO.getAccepted());
         if (NewPeople.handler != null){
             new Thread(new Runnable() {
                 @Override

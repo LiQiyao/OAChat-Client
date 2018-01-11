@@ -1,14 +1,15 @@
 package com.yytech.ochatclient.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.yytech.ochatclient.R;
 import com.yytech.ochatclient.common.Const;
@@ -28,6 +29,7 @@ import java.util.Map;
  */
 
 public class AddPeopleAdapter extends BaseAdapter implements Const.Status{
+    private String tag = "==AddPeopleAdapter";
     private LayoutInflater mInflater = null;
     private List<Map<String,Object>> data;
     private Context context;
@@ -121,7 +123,6 @@ public class AddPeopleAdapter extends BaseAdapter implements Const.Status{
                             }
                         }
                     }).start();
-                    Toast.makeText(context,"第"+position+"个添加成功！",Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -133,7 +134,19 @@ public class AddPeopleAdapter extends BaseAdapter implements Const.Status{
         holder.headview.setImageResource((Integer) data.get(position).get("imgid"));
         holder.title.setText((String) data.get(position).get("title"));
         holder.info.setText((String)data.get(position).get("info"));
-        holder.agree.setText("添加");
+        if((data.get(position).get("alreadyFriend")) == null || !(boolean)(data.get(position).get("alreadyFriend"))){
+            Log.i(tag,"==1==(data.get(position).get(\"alreadyFriend\"))"+(data.get(position).get("alreadyFriend")));
+            holder.agree.setText("添加");
+            holder.agree.setBackgroundResource(R.color.button_bg);
+            holder.agree.setFocusable(true);
+            holder.agree.setClickable(true);
+        }else{
+            Log.i(tag,"==2==(data.get(position).get(\"alreadyFriend\"))"+(data.get(position).get("alreadyFriend")));
+            holder.agree.setText("已添加");
+            holder.agree.setBackgroundColor(Color.GRAY);
+            holder.agree.setFocusable(false);
+            holder.agree.setClickable(false);
+        }
         return convertView;
     }
 }

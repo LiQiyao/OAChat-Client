@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="black">#000000</color>
     <color name="qq_bg">#1eb9f2</color>
+    <color name="button_bg">#09f</color>
     <color name="unimportant">#c7c7c7</color>
     <color name="qq_text_color">#52caf8</color>
     <color name="text_color_press">#5ffcff</color>

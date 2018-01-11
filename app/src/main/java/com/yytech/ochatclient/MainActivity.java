@@ -59,6 +59,10 @@ public class MainActivity extends FragmentActivity {
                 if (msg.what == 0x234){
                     Toast.makeText(getApplicationContext(),"收到一条好友请求！",Toast.LENGTH_SHORT).show();
                 }
+                if (msg.what == 0x666){
+                    Toast.makeText(MainActivity.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
             }
         };
 

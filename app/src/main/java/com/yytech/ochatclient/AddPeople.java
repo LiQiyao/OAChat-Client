@@ -2,6 +2,7 @@ package com.yytech.ochatclient;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.FoundUsersDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
+import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.dto.data.UserDetailDTO;
 import com.yytech.ochatclient.util.GsonUtil;
 
@@ -41,22 +44,26 @@ import java.util.List;
 import java.util.Map;
 
 public class AddPeople extends AppCompatActivity implements Const.Status{
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
+    private LinearLayout addPeopleLayout;
     private ImageView imageView;
     private TextView textView;
     private ListView listView;
     private List<Map<String,Object>> data;
     private EditText searchedit;
     private HttpURLConnection conn;
-    private Handler handler;
     private MessageDTO<LoginResultDTO> loginMsg;
     public String IP=Const.IP;
     public int HTTP_PORT=Const.HTTP_PORT;
+    public static Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_people);
+        addPeopleLayout = (LinearLayout) findViewById(R.id.add_people_layout);
         watchSearch(); //给软键盘搜索按钮添加事件
         handler = new Handler(){
             @Override
@@ -79,9 +86,21 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
                 if(msg.what == 0x234){
                     Toast.makeText(AddPeople.this,"您搜索的好友为空！",Toast.LENGTH_SHORT).show();
                 }
+                if (msg.what == 0x666){
+                    Toast.makeText(AddPeople.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
 
             }
         };
+
+        addPeopleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
 
     }
 
@@ -150,7 +169,6 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
                         MessageDTO<FoundUsersDTO> messageDTO = GsonUtil.getInstance().fromJson(result, objectType);
 
                         System.out.println("=====================服务器返回的信息：：" + result);
-                        System.out.println("==========" + messageDTO.getStatus());
                         if (messageDTO.getStatus() == SUCCESS){
                             System.out.println("===找到好友！");
                             FoundUsersDTO foundUsersDTO = messageDTO.getData();
@@ -185,8 +203,21 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
     }
 
 
+
     //返回事件
-    public void backToMessage(View source){
+    public void onBackPressed() {
+        Intent intent=new Intent(AddPeople.this,MainActivity.class);
+        Bundle bundle=new Bundle();
+        preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);
+        editor = preferences.edit();
+        String userId = preferences.getString("userId",null);
+        String token = preferences.getString("token",null);
+        MessageDTO<OnlineDTO> onlineMsg=new MessageDTO<OnlineDTO>();
+        onlineMsg.setToken(token);
+        onlineMsg.setUserId(Long.valueOf(userId));
+        bundle.putSerializable("onlineMsg",onlineMsg);
+        intent.putExtras(bundle);
+        startActivity(intent);
         finish();
     }
 
@@ -203,6 +234,7 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
             map.put("title", userDetailDTO.getNickName());
             map.put("info", userDetailDTO.getTelephoneNumber());
             map.put("toUserId",userDetailDTO.getId());
+            map.put("alreadyFriend",userDetailDTO.getAlreadyFriend());
             list.add(map);
         }
         return list;
