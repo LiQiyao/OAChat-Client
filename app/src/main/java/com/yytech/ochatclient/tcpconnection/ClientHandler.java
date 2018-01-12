@@ -22,12 +22,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         Log.d("MyHelloClientHandler", "===channelRead->msg=" + msg);
-        System.out.println("===msg to String" + msg.toString());
        /* ByteBuf byteBuf = (ByteBuf) msg;
         byte[] req = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(req);
         String messageString = new String(req);*/
-        System.out.println("===messageString" + msg);
         DataResolverProxy.getInstance().doAction(msg.toString());
 
     }

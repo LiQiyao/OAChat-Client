@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.yytech.ochatclient.adapter.ChatListAdapter;
 import com.yytech.ochatclient.common.Const;
@@ -32,6 +33,7 @@ public class FChatList extends android.support.v4.app.Fragment {
     private List<ChatLogListDTO> chatList;
     private UserInfo userInfo;
     private HttpURLConnection conn;
+    private TextView chatAddText;
     public String IP=Const.IP;
     public int HTTP_PORT=Const.HTTP_PORT;
     @Override
@@ -39,7 +41,7 @@ public class FChatList extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        Bundle bundle=getArguments();
+        final Bundle bundle=getArguments();
         loginMsg= (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
         chatList = new ArrayList<>();
         for (ChatLogListDTO chatLogListDTO : loginMsg.getData().getChatLogMap().values()){
@@ -50,7 +52,7 @@ public class FChatList extends android.support.v4.app.Fragment {
             ChatListAdapter chatListAdapter = new ChatListAdapter(chatList, getActivity());
             View view = inflater.inflate(R.layout.f_chat_list, container, false);
             ListView chatLsit = (ListView) view.findViewById(R.id.chat_list);
-        if(chatList!=null) {
+        if(chatList.size()>0) {
             chatLsit.setAdapter(chatListAdapter);
             chatLsit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

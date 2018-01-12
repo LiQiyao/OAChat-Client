@@ -6,6 +6,7 @@
     android:paddingRight="12dp">
 
     <LinearLayout
+        android:id="@+id/new_people_back_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
@@ -22,14 +23,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="@color/black"
+            android:textColor="@color/qq_text_color"
             android:text="@string/contacts"/>
 
     </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/myMessage"
+        android:text="新朋友"
         style="@style/bigFont_text"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"

@@ -12,7 +12,7 @@
         android:layout_height="60dp"
         android:gravity="center_vertical"
         android:layout_marginLeft="10dp">
-        <com.itee.oachat.oaview.XCRoundImageView
+        <com.yytech.ochatclient.oaview.XCRoundImageView
             android:id="@+id/headview"
             android:layout_width="50dp"
             android:layout_height="50dp"
@@ -47,7 +47,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="10dp"
-        android:background="#09f"
+        android:background="@color/button_bg"
         />
 
 </RelativeLayout>

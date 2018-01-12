@@ -10,15 +10,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
+import com.yytech.ochatclient.dto.data.AddFriendSuccessDTO;
+import com.yytech.ochatclient.dto.data.ChatLog;
 import com.yytech.ochatclient.dto.data.ChatLogListDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.dto.data.UserDetailDTO;
 import com.yytech.ochatclient.dto.data.UserInfo;
+import com.yytech.ochatclient.tcpconnection.TCPClient;
 import com.yytech.ochatclient.util.GsonUtil;
 
 import java.io.BufferedReader;
@@ -32,12 +36,12 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     private MessageDTO<OnlineDTO> onlineMsg;
-    private static MessageDTO<LoginResultDTO> loginMsg;
+    public static MessageDTO<LoginResultDTO> loginMsg;
     private List<ChatLogListDTO> chatList;
     private List<UserDetailDTO> friendList;
     private UserInfo userInfo;
     private HttpURLConnection conn;
-    private Handler handler;
+    public static Handler handler;
     private static String IP= Const.IP;
     private static int HTTP_PORT=Const.HTTP_PORT;
     Intent intent;
@@ -55,6 +59,13 @@ public class MainActivity extends FragmentActivity {
                 super.handleMessage(msg);
                 if (msg.what==0x123)
                     ChangeTab(0);
+                if (msg.what == 0x234){
+                    Toast.makeText(getApplicationContext(),"收到一条好友请求！",Toast.LENGTH_SHORT).show();
+                }
+                if (msg.what == 0x666){
+                    Toast.makeText(MainActivity.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                }
             }
         };
 
@@ -171,7 +182,7 @@ public class MainActivity extends FragmentActivity {
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_press);
 //            tag.setText("设置");
-            FPersonInfo fragment= new FPersonInfo();
+            FEditPersonInfo fragment= new FEditPersonInfo();
             Bundle bundle = new Bundle();
             bundle.putSerializable("loginMsg",loginMsg);//这里的values就是我们要传的值
             bundle.putSerializable("userInfo",userInfo);
@@ -180,11 +191,6 @@ public class MainActivity extends FragmentActivity {
             transaction.commit();
             System.out.println("===loginMsg" + i);
         }
-    }
-
-    public void personInfoToEdit(View source){
-        Intent intent = new Intent(this,EditPersonInfoActivity.class);
-        startActivity(intent);
     }
 
 }

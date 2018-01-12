@@ -1,36 +1,23 @@
 package com.yytech.ochatclient;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
-import com.yytech.ochatclient.adapter.MessageAdapter;
+
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.tcpconnection.TCPClient;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class FirstActivity extends AppCompatActivity {
-    ListView listView;
-    List<Map<String,Object>> data;
-    MessageAdapter messageAdapter;
-    ImageView addImageview ;
+
+
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     ImageView loginImage;
@@ -111,60 +98,7 @@ public class FirstActivity extends AppCompatActivity {
         }
 
 
-
-//        init();
-
-
     }
 
-    //初始化
-    public void init(){
-
-        //得到好友消息
-        listView = (ListView) findViewById(R.id.message_listview);
-        data = getData();
-        messageAdapter = new MessageAdapter(FirstActivity.this,data,"同意");
-        listView.setAdapter(messageAdapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(FirstActivity.this, PersonInfo.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-        //为添加好友按钮添加事件
-        addImageview = (ImageView) findViewById(R.id.add_imageview);
-        addImageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(FirstActivity.this,AddPeople.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
-                        Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
-
-    }
-
-    //得到数据
-    private List<Map<String, Object>> getData()
-    {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-        Map<String, Object> map;
-        for(int i=0;i<20;i++)
-        {
-            map = new HashMap<String, Object>();
-            map.put("imgid", R.drawable.mine_avatar);
-            map.put("title", "小红");
-            map.put("info", "加个好友呗");
-            list.add(map);
-        }
-        return list;
-    }
 
 }

@@ -47,10 +47,20 @@
             style="@style/bigFont_text"
             android:layout_centerInParent="true"
             />
+        <TextView
+            android:id="@+id/person_info_cancellation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="注销"
+            android:textSize="15sp"
+            android:textColor="@color/bright_on_press_text"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            />
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="13dp">
         <ImageView
@@ -131,7 +141,7 @@
             <EditText
                 android:background="@null"
                 android:text="123"
-                style="@style/edit_personinfo_eidt"
+                style="@style/edit_personinfo_edit"
                 />
         </LinearLayout>
 
@@ -151,7 +161,8 @@
                 android:text="昵称"
                 />
             <EditText
-                style="@style/edit_personinfo_eidt"
+                android:id="@+id/edit_personinfo_nickname"
+                style="@style/edit_personinfo_edit"
                 android:text="-浮生若梦°"
                 android:background="@null"
                 />
@@ -168,8 +179,9 @@
                 android:text="性别"
                 />
             <EditText
+                android:id="@+id/edit_personinfo_gender"
                 android:text="男"
-                style="@style/edit_personinfo_eidt"
+                style="@style/edit_personinfo_edit"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -193,11 +205,11 @@
             <TextView
                 android:layout_height="match_parent"
                 style="@style/editPersonInfoText"
-                android:text="生日"
+                android:text="手机"
                 />
             <EditText
-                style="@style/edit_personinfo_eidt"
-                android:text="2018-12-1"
+                style="@style/edit_personinfo_edit"
+                android:text="15868133385"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -231,7 +243,7 @@
                 android:text="职业"
                 />
             <EditText
-                style="@style/edit_personinfo_eidt"
+                style="@style/edit_personinfo_edit"
                 android:hint="请输入你的职业"
                 />
         </LinearLayout>
@@ -247,7 +259,7 @@
                 android:text="公司"
                 />
             <EditText
-                style="@style/edit_personinfo_eidt"
+                style="@style/edit_personinfo_edit"
                 android:hint="填写公司，发现同事"
                 />
         </LinearLayout>
@@ -263,7 +275,7 @@
                 android:text="学校"
                 />
             <EditText
-                style="@style/edit_personinfo_eidt"
+                style="@style/edit_personinfo_edit"
                 android:text="浙江科技学院"
                 />
             <LinearLayout
@@ -283,33 +295,13 @@
         <ImageView
             style="@style/grey_dividing_line"
             />
-        <LinearLayout
-            style="@style/edit_personinfo_textLayout"
-            >
-            <TextView
-                android:layout_height="match_parent"
-                style="@style/editPersonInfoText"
-                android:text="邮箱"
-                />
-            <EditText
-                style="@style/edit_personinfo_eidt"
-                android:text="1040473978@qq.com"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/person_info_6_edit"/>
-            </LinearLayout>
-        </LinearLayout>
-        <ImageView
-            style="@style/grey_dividing_line"
-            />
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center">
+
+    </LinearLayout>
+
+
 </LinearLayout>

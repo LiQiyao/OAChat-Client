@@ -1,12 +1,9 @@
 package com.yytech.ochatclient.util;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import org.apache.commons.net.ftp.FTP;
@@ -184,7 +181,9 @@ public class MyFTPUtil {
                 try {
                     try {
                         ftpClient=new FTPClient();
+                        System.out.println("===Open");
                         ftpClient.connect(ftpHost,ftpPort);// 连接FTP服务器
+                        System.out.println("===Ope11n");
                         ftpClient.setControlEncoding(code);
                     } catch (Exception e) {
                         System.out.println("===Open Failed"+e);

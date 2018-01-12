@@ -7,11 +7,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@drawable/top"
         android:paddingLeft="12dp"
         android:paddingRight="12dp">
 
         <LinearLayout
+            android:id="@+id/add_people_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -24,14 +24,14 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginRight="2dp"
-                android:src="@mipmap/left_point" />
+                android:src="@drawable/left" />
 
             <TextView
                 android:id="@+id/add_people_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1111"
-                android:textColor="#FFFFFF"
+                android:text="@string/back"
+                android:textColor="@color/bright_on_press_text"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -40,22 +40,22 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="1111"
-            android:textColor="#FFFFFF"
-            android:textSize="23sp"
+            android:text="@string/addPeople"
+            style="@style/bigFont_text"
 
             />
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+
         android:orientation="horizontal"
         android:layout_gravity="center_horizontal">
         <EditText
             android:id="@+id/add_people_searchEdit"
-            android:layout_width="230dp"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:hint="  qq号/好友名"
@@ -65,13 +65,6 @@
             android:gravity="center_vertical"
             android:singleLine="true"
             />
-        <ImageView
-            android:id="@+id/add_people_planeImg"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/search_bar_icon"
-            android:layout_gravity="center_vertical"
-            android:onClick="getSearchResult"/>
     </LinearLayout>
 
     <ListView

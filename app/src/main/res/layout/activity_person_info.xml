@@ -11,26 +11,6 @@
         android:layout_height="185dp"
         android:orientation="horizontal"
         android:background="@drawable/person_info_bg1">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            >
-            <TextView
-                android:id="@+id/person_info_cancellation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="注销"
-                android:textSize="16sp"
-                android:textColor="@color/qq_text_color"
-                android:layout_gravity="right"
-                android:layout_marginRight="15dp"
-                />
-
-        </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout
@@ -86,7 +66,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="personInfoToEdit"
             android:orientation="vertical">
 
             <LinearLayout
@@ -148,6 +127,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="浙江" />
+                <TextView
+                    android:id="@+id/person_info_tel"
+                    style="@style/personinfo_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="15868133375" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -184,7 +169,9 @@
                     android:text="学生" />
             </LinearLayout>
         </LinearLayout>
-
+        <ImageView
+            style="@style/grey_dividing_line"
+            />
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="166dp"
