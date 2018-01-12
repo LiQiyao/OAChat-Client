@@ -12,11 +12,11 @@
         />
     <ImageView
         android:id="@+id/ivicon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_gravity="top"
         android:src="@drawable/head"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/message_time"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/chatfrom_bg_normal"
+        android:layout_marginTop="16dp"
         android:layout_below="@+id/message_time"
         android:layout_toRightOf="@+id/ivicon"
         android:layout_toEndOf="@+id/ivicon">
@@ -33,9 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text=""
+            android:text="11111"
             android:gravity="center"
-            android:textSize="20dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/chat_image"
             />

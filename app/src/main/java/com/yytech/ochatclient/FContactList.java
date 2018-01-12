@@ -42,14 +42,15 @@ public class FContactList extends android.support.v4.app.Fragment {
         friendList=loginMsg.getData().getFriendList();
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
         View view=inflater.inflate(R.layout.f_contact_list,container,false);
-
-        MyExpandableListViewAdapter adapter = new MyExpandableListViewAdapter(friendList,getActivity());
+        if(friendList!=null) {
+            MyExpandableListViewAdapter adapter = new MyExpandableListViewAdapter(friendList, getActivity());
 
 
         /* 1. 设置适配器*/
-        ExpandableListView myExpandableListView= (ExpandableListView) view.findViewById(R.id.elv);
-        myExpandableListView.setAdapter(adapter);
-        System.out.println("===1111111111111111" + friendList.get(0).getUsername());
+            ExpandableListView myExpandableListView = (ExpandableListView) view.findViewById(R.id.elv);
+            myExpandableListView.setAdapter(adapter);
+            System.out.println("===1111111111111111" + friendList.get(0).getUsername());
+        }
 //        myExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 //            @Override
 //            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {

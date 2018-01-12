@@ -47,53 +47,54 @@ public class FChatList extends android.support.v4.app.Fragment {
         }
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
         System.out.println("===1111111111111111" + loginMsg);
-        ChatListAdapter chatListAdapter=new ChatListAdapter(chatList,getActivity());
-        View view=inflater.inflate(R.layout.f_chat_list,container,false);
-        ListView chatLsit= (ListView) view.findViewById(R.id.chat_list);
-        chatLsit.setAdapter(chatListAdapter);
-        chatLsit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final int i=position;
-                if (chatList.get(position).getUnReadChatLogCount()!=0){
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                URL url = new URL("http://"+IP+":"+HTTP_PORT+"/api/chatLog/read?"+"token="+loginMsg.getToken()+ "&selfId=" +userInfo.getId()+"&friendId="+chatList.get(i).getFriendId());
-                                System.out.println("==="+"http://"+IP+":"+HTTP_PORT+"/api/chatLog/read?"+"token="+loginMsg.getToken()+ "&selfId=" +userInfo.getId()+"&friendId="+chatList.get(i).getFriendId());
-                                conn = (HttpURLConnection) url.openConnection();
-                                conn.setRequestMethod("GET");
-                                System.out.println("=====HTTP");
-                                conn.setConnectTimeout(10 * 1000);
-                                //请求头的信息
-                                conn.setRequestProperty("accept","*/*");
-                                conn.setRequestProperty("connection", "Keep-Alive");
-                                conn.setRequestProperty("Origin", "http://"+IP);
-                                conn.connect();
-                                int code = conn.getResponseCode();
-                                System.out.println("===code"+code);
-                            } catch (MalformedURLException e) {
-                                System.out.println("===error1");
-                                e.printStackTrace();
-                            } catch (IOException e) {
-                                System.out.println("===error2");
-                                e.printStackTrace();
+            ChatListAdapter chatListAdapter = new ChatListAdapter(chatList, getActivity());
+            View view = inflater.inflate(R.layout.f_chat_list, container, false);
+            ListView chatLsit = (ListView) view.findViewById(R.id.chat_list);
+        if(chatList!=null) {
+            chatLsit.setAdapter(chatListAdapter);
+            chatLsit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    final int i = position;
+                    if (chatList.get(position).getUnReadChatLogCount() != 0) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    URL url = new URL("http://" + IP + ":" + HTTP_PORT + "/api/chatLog/read?" + "token=" + loginMsg.getToken() + "&selfId=" + userInfo.getId() + "&friendId=" + chatList.get(i).getFriendId());
+                                    System.out.println("===" + "http://" + IP + ":" + HTTP_PORT + "/api/chatLog/read?" + "token=" + loginMsg.getToken() + "&selfId=" + userInfo.getId() + "&friendId=" + chatList.get(i).getFriendId());
+                                    conn = (HttpURLConnection) url.openConnection();
+                                    conn.setRequestMethod("GET");
+                                    System.out.println("=====HTTP");
+                                    conn.setConnectTimeout(10 * 1000);
+                                    //请求头的信息
+                                    conn.setRequestProperty("accept", "*/*");
+                                    conn.setRequestProperty("connection", "Keep-Alive");
+                                    conn.setRequestProperty("Origin", "http://" + IP);
+                                    conn.connect();
+                                    int code = conn.getResponseCode();
+                                    System.out.println("===code" + code);
+                                } catch (MalformedURLException e) {
+                                    System.out.println("===error1");
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    System.out.println("===error2");
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    }).start();
+                        }).start();
+                    }
+                    Intent intent = new Intent(getActivity(), Chat.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("chatLogInfo", chatList.get(position));
+                    bundle.putSerializable("userInfo", userInfo);
+                    bundle.putSerializable("token", loginMsg.getToken());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
-                Intent intent=new Intent(getActivity(),Chat.class);
-                Bundle bundle=new Bundle();
-                bundle.putSerializable("chatLogInfo",chatList.get(position));
-                bundle.putSerializable("userInfo",userInfo);
-                bundle.putSerializable("token",loginMsg.getToken());
-                intent.putExtras(bundle);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
-
+            });
+        }
         return view;
     }
 }
