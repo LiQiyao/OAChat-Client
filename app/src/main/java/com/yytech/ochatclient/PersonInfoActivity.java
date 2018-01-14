@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class PersonInfoActivity extends AppCompatActivity implements Const.Statu
     private Long userId;
     private String token;
     private List<ChatLogListDTO> chatList;
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
 
 
     @Override
@@ -82,6 +84,8 @@ public class PersonInfoActivity extends AppCompatActivity implements Const.Statu
         deleteText = (TextView) findViewById(R.id.person_info_delete_text);
         sendMsgBtn = (Button) findViewById(R.id.person_info_send_msg_btn);
         addfriendBtn = (Button) findViewById(R.id.person_info_add_friend);
+        ImageView head= (ImageView) findViewById(R.id.head);
+        head.setImageResource(heads[Integer.parseInt(userDetailDTO.getIcon())-1]);
 
         nickNameText.setText(userDetailDTO.getNickName());
         genderText.setText(userDetailDTO.getGender());
@@ -164,10 +168,18 @@ public class PersonInfoActivity extends AppCompatActivity implements Const.Statu
             sendMsgBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //******************跳转消息页面********************
-
-                    //******************跳转消息页面********************
-                    Toast.makeText(PersonInfoActivity.this,"转到发消息页面",Toast.LENGTH_SHORT).show();
+                    loginMsg = MainActivity.loginMsg;
+                   ChatLogListDTO chatLogListDTO=loginMsg.getData().getChatLogMap().get(userDetailDTO.getId());
+                    Intent intent=new Intent(PersonInfoActivity.this,ChatActivity.class);
+                    Bundle bundle=new Bundle();
+                    System.out.println("===chatLogListDTO"+chatLogListDTO);
+                    bundle.putSerializable("chatLogInfo",chatLogListDTO);
+                    bundle.putSerializable("userInfo", loginMsg.getData().getSelf());
+                    bundle.putSerializable("token", loginMsg.getToken());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+//                    Toast.makeText(PersonInfoActivity.this,"转到发消息页面",Toast.LENGTH_SHORT).show();
                 }
             });
         }

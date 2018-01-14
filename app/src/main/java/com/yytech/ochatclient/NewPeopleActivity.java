@@ -43,6 +43,7 @@ public class NewPeopleActivity extends AppCompatActivity {
     public static Handler handler;
     private Bundle bundle1;
     private String tag = "==NewPeopleActivity.jav";
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
 
 
     @Override
@@ -122,7 +123,7 @@ public class NewPeopleActivity extends AppCompatActivity {
             map = new HashMap<String, Object>();
             map.put("toUserId",addFriendRequestList.get(i).getToUserId());
             map.put("fromUserId",addFriendRequestList.get(i).getFromUserId());
-            map.put("imgid", R.drawable.mine_avatar);
+            map.put("imgid", heads[Integer.parseInt(addFriendRequestList.get(i).getFromIcon())-1]);
             map.put("nickname", addFriendRequestList.get(i).getFromNickName());
             map.put("gender", addFriendRequestList.get(i).getFromGender());
             map.put("accepted",addFriendRequestList.get(i).getAccepted());
@@ -188,7 +189,7 @@ public class NewPeopleActivity extends AppCompatActivity {
             for(int i=0;i<addFriendRequestList.size();i++)
             {
                 map = new HashMap<String, Object>();
-                map.put("imgid", R.drawable.mayknow_head);
+                map.put("imgid", heads[Integer.parseInt(addFriendRequestList.get(i).getFromIcon())]-1);
                 map.put("nickname", addFriendRequestList.get(i).getFromNickName());
                 map.put("gender", addFriendRequestList.get(i).getFromGender());
                 map.put("accepted",false);

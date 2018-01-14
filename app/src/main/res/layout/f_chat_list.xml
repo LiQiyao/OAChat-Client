@@ -26,7 +26,7 @@
             android:layout_alignBottom="@+id/imageView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/imageView2" />
+            android:id="@+id/head" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
             android:layout_marginRight="11dp"
             android:layout_marginEnd="11dp"
             android:layout_marginBottom="16dp"
-            android:layout_alignBottom="@+id/imageView2"
+            android:layout_alignBottom="@+id/head"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/chat_add" />
@@ -53,7 +53,7 @@
             android:id="@+id/search"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView"
-            android:layout_alignParentStart="true"/>
+            />
 
         <FrameLayout
             android:id="@+id/container"

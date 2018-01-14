@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Chat"
+            android:name=".ChatActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".LoginActivity" />

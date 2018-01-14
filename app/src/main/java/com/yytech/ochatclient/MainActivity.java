@@ -1,9 +1,11 @@
 package com.yytech.ochatclient;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
+import com.yytech.ochatclient.dto.data.ChatLog;
 import com.yytech.ochatclient.dto.data.ChatLogListDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
@@ -36,15 +39,15 @@ public class MainActivity extends FragmentActivity {
     String tag = "==MainActivity";
     private MessageDTO<OnlineDTO> onlineMsg;
     public static MessageDTO<LoginResultDTO> loginMsg;
-    private List<ChatLogListDTO> chatList;
-    private List<UserDetailDTO> friendList;
     private UserInfo userInfo;
     private HttpURLConnection conn;
     public static Handler handler;
+    public static  Handler msgHandler;
     private static String IP= Const.IP;
     private static int HTTP_PORT=Const.HTTP_PORT;
     private Intent intent;
     private RelativeLayout mainContentLayout;
+    private int tab;
 
 
     @Override
@@ -86,6 +89,20 @@ public class MainActivity extends FragmentActivity {
                 }
             }
         };
+        msgHandler=new Handler(){
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what==0x789 && !isDestroyed()){
+                    ChatLog chatLog= (ChatLog) msg.obj;
+                    loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).setUnReadChatLogCount(loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getUnReadChatLogCount()+1);
+                    loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getChatLogs().add(chatLog);
+                    if(tab==0)
+                    ChangeTab(0);
+                }
+            }
+        };
 
         new Thread(new Runnable() {
             @Override
@@ -116,7 +133,6 @@ public class MainActivity extends FragmentActivity {
                         loginMsg = GsonUtil.getInstance().fromJson(result, objectType);
                         userInfo=loginMsg.getData().getSelf();
                         handler.sendEmptyMessage(0x123);
-//                        ChangeTab(0);
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -168,6 +184,7 @@ public class MainActivity extends FragmentActivity {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         if(i==0){
+            tab=0;
             message.setImageResource(R.mipmap.icon_message_press);
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_normal);
@@ -182,6 +199,7 @@ public class MainActivity extends FragmentActivity {
             System.out.println("===loginMsg" + i);
         }
         if(i==1){
+            tab=1;
             message.setImageResource(R.mipmap.icon_message_normal);
             contacts.setImageResource(R.mipmap.icon_contact_press);
             install.setImageResource(R.mipmap.icon_set_normal);
@@ -196,6 +214,7 @@ public class MainActivity extends FragmentActivity {
             System.out.println("===loginMsg" + i);
         }
         if(i==2){
+            tab=3;
             message.setImageResource(R.mipmap.icon_message_normal);
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_press);

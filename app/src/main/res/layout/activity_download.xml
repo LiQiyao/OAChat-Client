@@ -20,7 +20,9 @@
             android:layout_height="20dp"
             android:layout_marginLeft="10dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/left" />
+            android:src="@drawable/left" 
+            android:id="@+id/back"
+            />
     </RelativeLayout>
     <ImageView
         android:layout_width="200dp"

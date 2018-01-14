@@ -1,4 +1,4 @@
-package com.yytech.ochatclient;
+package com.yytech.ochatclient.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.yytech.ochatclient.DownLoadActivity;
+import com.yytech.ochatclient.R;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.data.ChatLog;
 import com.yytech.ochatclient.util.MyFTPUtil;
@@ -31,12 +33,17 @@ import java.util.List;
 public class ChatAdapter extends BaseAdapter {
     private Long myId;
     private Context context;
+    private String myIcon;
+    private String friendIcon;
     private List<ChatLog> chatLogs;
-    public ChatAdapter(Context context, List<ChatLog> chatLogs,Long myId) {
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
+    public ChatAdapter(Context context, List<ChatLog> chatLogs,Long myId,String myIcon,String friendIcon) {
         super();
         this.context = context;
         this.chatLogs = chatLogs;
         this.myId=myId;
+        this.myIcon=myIcon;
+        this.friendIcon=friendIcon;
     }
 
     @Override
@@ -68,6 +75,8 @@ public class ChatAdapter extends BaseAdapter {
         if(chatLog.getSenderId().equals(myId)){
             view=View.inflate(context, R.layout.item_chat_right, null);
             TextView msgTime= (TextView) view.findViewById(R.id.message_time);
+            ImageView head= (ImageView) view.findViewById(R.id.head);
+            head.setImageResource(heads[Integer.parseInt(myIcon)-1]);
             SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");
             Date date=new Date(chatLog.getSendTime());
             System.out.println("===date"+chatLog.getSendTime());
@@ -139,6 +148,8 @@ public class ChatAdapter extends BaseAdapter {
         else{
             view=View.inflate(context,R.layout.item_chat_left,null);
             TextView msgTime= (TextView) view.findViewById(R.id.message_time);
+            ImageView head= (ImageView) view.findViewById(R.id.head);
+            head.setImageResource(heads[Integer.parseInt(friendIcon)-1]);
             SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");
             Date date=new Date(chatLog.getSendTime());
             String lStrDate = lsdFormat.format(date);

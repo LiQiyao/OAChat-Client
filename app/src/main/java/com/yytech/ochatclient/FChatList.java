@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class FChatList extends android.support.v4.app.Fragment {
     private Bundle bundle;
     public int HTTP_PORT=Const.HTTP_PORT;
     private TextView chatAddtext;
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,9 @@ public class FChatList extends android.support.v4.app.Fragment {
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
         ChatListAdapter chatListAdapter = new ChatListAdapter(chatList, getActivity());
         View view = inflater.inflate(R.layout.f_chat_list, container, false);
-        ListView chatlist = (ListView) view.findViewById(R.id.chat_list);
+        ImageView head= (ImageView) view.findViewById(R.id.head);
+        head.setImageResource(heads[Integer.parseInt(userInfo.getIcon())-1]);
+        final ListView chatlist = (ListView) view.findViewById(R.id.chat_list);
         if(chatList.size()>0) {
             chatlist.setAdapter(chatListAdapter);
             chatlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,7 +91,7 @@ public class FChatList extends android.support.v4.app.Fragment {
                             }
                         }).start();
                     }
-                    Intent intent = new Intent(getActivity(), Chat.class);
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("chatLogInfo", chatList.get(position));
                     bundle.putSerializable("userInfo", userInfo);

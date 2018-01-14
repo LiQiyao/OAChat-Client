@@ -57,6 +57,7 @@ public class AddPeopleActivity extends AppCompatActivity implements Const.Status
     public String IP=Const.IP;
     public int HTTP_PORT=Const.HTTP_PORT;
     public static Handler handler;
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,7 +234,7 @@ public class AddPeopleActivity extends AppCompatActivity implements Const.Status
         for(UserDetailDTO userDetailDTO : userDetailDTOList)
         {
             map = new HashMap<String, Object>();
-            map.put("imgid", R.drawable.mine_avatar);
+            map.put("imgid",heads[Integer.parseInt(userDetailDTO.getIcon())-1] );
             map.put("title", userDetailDTO.getNickName());
             map.put("info", userDetailDTO.getTelephoneNumber());
             map.put("toUserId",userDetailDTO.getId());

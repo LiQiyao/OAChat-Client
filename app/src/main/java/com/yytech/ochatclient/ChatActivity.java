@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.yytech.ochatclient.adapter.ChatAdapter;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.ChatLog;
@@ -36,7 +37,7 @@ import java.util.List;
 
 import static com.yytech.ochatclient.MainActivity.loginMsg;
 
-public class Chat extends Activity {
+public class ChatActivity extends Activity {
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     private Long myId;
@@ -47,6 +48,8 @@ public class Chat extends Activity {
     private ListView lv_chat_dialog;
     private ChatLogListDTO chatLogInfo;
     private UserInfo userInfo;
+    private String friendIcon;
+    private String myIcon;
     private ImageView upLoad;
     private List<ChatLog> chatLogs;
     public static Handler revHandler;
@@ -105,8 +108,10 @@ public class Chat extends Activity {
         setContentView(R.layout.activity_chat);
         final Intent intent=getIntent();
         userInfo= (UserInfo) intent.getSerializableExtra("userInfo");
+        myIcon=userInfo.getIcon();
         token= (String) intent.getSerializableExtra("token");
         chatLogInfo= (ChatLogListDTO) intent.getSerializableExtra("chatLogInfo");
+        friendIcon=chatLogInfo.getFriendIcon();
         chatLogs=chatLogInfo.getChatLogs();
         myId=userInfo.getId();
         System.out.println("===222222");
@@ -134,7 +139,7 @@ public class Chat extends Activity {
         upLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent fileIntent=new Intent(Chat.this,FilePathList.class);
+                Intent fileIntent=new Intent(ChatActivity.this,FilePathList.class);
                 System.out.println("===OnClick");
                 startActivity(fileIntent);
             }
@@ -142,7 +147,7 @@ public class Chat extends Activity {
         /**
          *setAdapter
          */
-        chatAdapter = new ChatAdapter(this, chatLogs,myId);
+        chatAdapter = new ChatAdapter(this, chatLogs,myId,myIcon,friendIcon);
         lv_chat_dialog.setAdapter(chatAdapter);
 
         et_chat_message.addTextChangedListener(new TextWatcher() {
@@ -187,7 +192,7 @@ public class Chat extends Activity {
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(et_chat_message.getText().toString())) {
-                    Toast.makeText(Chat.this, "发送内容不能为空",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ChatActivity.this, "发送内容不能为空",Toast.LENGTH_LONG).show();
                     return;
                 }
                 ChatLog chatLog = new ChatLog();
@@ -262,7 +267,7 @@ public class Chat extends Activity {
             }
         }).start();
 
-        Intent intent=new Intent(Chat.this,MainActivity.class);
+        Intent intent=new Intent(ChatActivity.this,MainActivity.class);
         Bundle bundle=new Bundle();
         preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);
         editor = preferences.edit();

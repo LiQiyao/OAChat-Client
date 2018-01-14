@@ -11,7 +11,7 @@
         android:id="@+id/message_time"
         />
     <com.yytech.ochatclient.oaview.XCRoundImageView
-        android:id="@+id/ivicon"
+        android:id="@+id/head"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_gravity="top"
@@ -27,14 +27,14 @@
         android:background="@drawable/chatfrom_bg_normal"
         android:layout_marginTop="16dp"
         android:layout_below="@+id/message_time"
-        android:layout_toRightOf="@+id/ivicon"
-        android:layout_toEndOf="@+id/ivicon">
+        android:layout_toRightOf="@+id/head"
+        android:layout_toEndOf="@+id/head">
         <TextView
             android:id="@+id/tv_chat_me_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="11111"
+            android:text=""
             android:gravity="center"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/chat_image"
