@@ -56,6 +56,7 @@
             android:textColor="@color/bright_on_press_text"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
             />
     </RelativeLayout>
     <LinearLayout
@@ -109,35 +110,13 @@
         <LinearLayout
             style="@style/edit_personinfo_textLayout"
             >
+
             <TextView
-                android:layout_height="match_parent"
+                android:id="@+id/textView"
                 style="@style/editPersonInfoText"
-                android:text="头像"
-                />
-            <LinearLayout
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical">
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="end"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/person_info_6_edit"/>
-            </LinearLayout>
-        </LinearLayout>
-        <ImageView
-            style="@style/grey_dividing_line"
-            />
-        <LinearLayout
-            style="@style/edit_personinfo_textLayout"
-            >
-            <TextView
-                android:layout_height="match_parent"
-                style="@style/editPersonInfoText"
-                android:text="签名"
-                />
+                android:text="签名" />
+
             <EditText
                 android:background="@null"
                 android:text="123"
@@ -295,13 +274,22 @@
         <ImageView
             style="@style/grey_dividing_line"
             />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#fff"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ensure_selector"/>
+        </LinearLayout>
+        <ImageView
+            style="@style/grey_dividing_line"
+            />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:gravity="center">
 
-    </LinearLayout>
 
 
 </LinearLayout>

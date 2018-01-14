@@ -1,7 +1,6 @@
 package com.yytech.ochatclient.dto.data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by Lee on 2017/11/23.
@@ -86,5 +85,20 @@ public class AddFriendRequestDTO implements Serializable{
 
     public void setSendTime(Long sendTime) {
         this.sendTime = sendTime;
+    }
+
+
+    @Override
+    public String toString() {
+        return "AddFriendRequestDTO{" +
+                "fromUserId=" + fromUserId +
+                ", fromUsername='" + fromUsername + '\'' +
+                ", fromNickName='" + fromNickName + '\'' +
+                ", fromIcon='" + fromIcon + '\'' +
+                ", fromGender='" + fromGender + '\'' +
+                ", toUserId=" + toUserId +
+                ", sendTime=" + sendTime +
+                ", accepted=" + accepted +
+                '}';
     }
 }

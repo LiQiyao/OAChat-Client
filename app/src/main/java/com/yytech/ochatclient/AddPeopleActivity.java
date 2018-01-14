@@ -43,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AddPeople extends AppCompatActivity implements Const.Status{
+public class AddPeopleActivity extends AppCompatActivity implements Const.Status{
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private LinearLayout addPeopleLayout;
@@ -72,25 +72,28 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
                 if (msg.what == 0x123){
                     //得到索搜结果
                     listView = (ListView) findViewById(R.id.add_people_listview);
-                    AddPeopleAdapter addPeopleAdapter = new AddPeopleAdapter(AddPeople.this,data,msg.getData());
+                    AddPeopleAdapter addPeopleAdapter = new AddPeopleAdapter(AddPeopleActivity.this,data,msg.getData());
                     listView.setAdapter(addPeopleAdapter);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            //我这里实现的是跳转功能**********
-                            Intent intent = new Intent(AddPeople.this, PersonInfo.class);
+                            //跳转到个人信息页面
+                            Intent intent = new Intent(AddPeopleActivity.this, PersonInfoActivity.class);
+                            UserDetailDTO userDetailDTO = (UserDetailDTO) data.get(position).get("userDetailDTO");
+                            Bundle detailBundle = new Bundle();
+                            detailBundle.putSerializable("userDetailDTO",userDetailDTO);
+                            intent.putExtras(detailBundle);
                             startActivity(intent);
                         }
                     });
                 }
                 if(msg.what == 0x234){
-                    Toast.makeText(AddPeople.this,"您搜索的好友为空！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPeopleActivity.this,"您搜索的好友为空！",Toast.LENGTH_SHORT).show();
                 }
                 if (msg.what == 0x666){
-                    Toast.makeText(AddPeople.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddPeopleActivity.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }
-
             }
         };
 
@@ -115,7 +118,7 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
                     // 先隐藏键盘
                     ((InputMethodManager) searchedit.getContext()
                             .getSystemService(Context.INPUT_METHOD_SERVICE))
-                            .hideSoftInputFromWindow(AddPeople.this.getCurrentFocus().getWindowToken(),
+                            .hideSoftInputFromWindow(AddPeopleActivity.this.getCurrentFocus().getWindowToken(),
                                     InputMethodManager.HIDE_NOT_ALWAYS);
 
 
@@ -206,7 +209,7 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
 
     //返回事件
     public void onBackPressed() {
-        Intent intent=new Intent(AddPeople.this,MainActivity.class);
+        Intent intent=new Intent(AddPeopleActivity.this,MainActivity.class);
         Bundle bundle=new Bundle();
         preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);
         editor = preferences.edit();
@@ -235,6 +238,7 @@ public class AddPeople extends AppCompatActivity implements Const.Status{
             map.put("info", userDetailDTO.getTelephoneNumber());
             map.put("toUserId",userDetailDTO.getId());
             map.put("alreadyFriend",userDetailDTO.getAlreadyFriend());
+            map.put("userDetailDTO",userDetailDTO);
             list.add(map);
         }
         return list;

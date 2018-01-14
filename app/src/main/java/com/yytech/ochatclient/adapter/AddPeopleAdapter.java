@@ -89,7 +89,6 @@ public class AddPeopleAdapter extends BaseAdapter implements Const.Status{
                 public void onClick(View v) {
                     loginMsg = (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
                     userInfo = (UserInfo) bundle.getSerializable("userInfo");
-                    String key = bundle.getString("key");
                     //开始发送添加好友信号
                     System.out.println("=====发送添加好友信息");
                     //发送请求
@@ -123,7 +122,6 @@ public class AddPeopleAdapter extends BaseAdapter implements Const.Status{
                             }
                         }
                     }).start();
-
                 }
             });
 

@@ -27,6 +27,7 @@ public class FContactList extends android.support.v4.app.Fragment {
     private UserInfo userInfo;
     private TextView contactAddText;
     private LinearLayout newpeopleLinear;
+    private Bundle bundle;
 
 //    @Override
 //    public void onAttach(Context context) {
@@ -39,7 +40,7 @@ public class FContactList extends android.support.v4.app.Fragment {
         /* 1.1 创建一个adapter实例*/
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        final Bundle bundle=getArguments();
+        bundle=getArguments();
         loginMsg= (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
         friendList=loginMsg.getData().getFriendList();
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
@@ -49,7 +50,7 @@ public class FContactList extends android.support.v4.app.Fragment {
         contactAddText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),AddPeople.class);
+                Intent intent = new Intent(getContext(),AddPeopleActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
             }
@@ -60,7 +61,7 @@ public class FContactList extends android.support.v4.app.Fragment {
         newpeopleLinear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(),NewPeople.class);
+                Intent intent = new Intent(getContext(),NewPeopleActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
                 getActivity().finish();
@@ -75,17 +76,23 @@ public class FContactList extends android.support.v4.app.Fragment {
         /* 1. 设置适配器*/
             ExpandableListView myExpandableListView = (ExpandableListView) view.findViewById(R.id.elv);
             myExpandableListView.setAdapter(adapter);
-            System.out.println("===1111111111111111" + friendList.get(0).getUsername());
+            myExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                    if (groupPosition==0) {
+                        Intent intent = new Intent(getActivity(), PersonInfoActivity.class);
+                        Bundle detailBundle = new Bundle();
+                        UserDetailDTO userDetailDTO = friendList.get(childPosition);
+                        detailBundle.putSerializable("userDetailDTO", userDetailDTO);
+                        detailBundle.putLong("userId",loginMsg.getUserId());
+                        detailBundle.putString("token",loginMsg.getToken());
+                        intent.putExtras(detailBundle);
+                        startActivity(intent);
+                    }
+                        return true;
+                }
+            });
         }
-//        myExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-//            @Override
-//            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-//                    Intent intent=new Intent(getActivity(),Chat.class);
-//                    Bundle bundle=new Bundle();
-//                    startActivity(intent);
-//                return true;
-//            }
-//        });
         return view;
     }
 }

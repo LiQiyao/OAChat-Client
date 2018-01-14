@@ -7,6 +7,7 @@ import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.resolver.impl.AddFriendRequestDTOResolver;
 import com.yytech.ochatclient.resolver.impl.AddFriendSuccessDTOResolver;
 import com.yytech.ochatclient.resolver.impl.ChatLogResolver;
+import com.yytech.ochatclient.resolver.impl.DeleteFriendSuccessDTOResolver;
 import com.yytech.ochatclient.resolver.impl.LoginResultDTOResolver;
 import com.yytech.ochatclient.resolver.impl.OnlineDTOResolver;
 import com.yytech.ochatclient.util.GsonUtil;
@@ -28,6 +29,8 @@ public class DataResolverProxy {
         RESOLVER_MAP.put("addFriendSuccessDTO", new AddFriendSuccessDTOResolver());
         RESOLVER_MAP.put("addFriendRequestDTO", new AddFriendRequestDTOResolver());
         RESOLVER_MAP.put("onlineDTO",new OnlineDTOResolver());
+        RESOLVER_MAP.put("deleteFriendSuccessDTO",new DeleteFriendSuccessDTOResolver());
+
     }
 
     public static DataResolverProxy getInstance(){
@@ -39,6 +42,7 @@ public class DataResolverProxy {
     public void doAction(String jsonMessage){
         MessageDTO messageDTO = GsonUtil.getInstance().fromJson(jsonMessage, MessageDTO.class);
         System.out.println("===doAction" + messageDTO);
+
         System.out.println("===> resolver" + RESOLVER_MAP.get(messageDTO.getDataName()));
         RESOLVER_MAP.get(messageDTO.getDataName()).resolve(jsonMessage);
     }

@@ -27,8 +27,14 @@ import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.dto.data.UserInfo;
 import com.yytech.ochatclient.tcpconnection.TCPClient;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Date;
 import java.util.List;
+
+import static com.yytech.ochatclient.MainActivity.loginMsg;
 
 public class Chat extends Activity {
     SharedPreferences preferences;
@@ -44,6 +50,9 @@ public class Chat extends Activity {
     private ImageView upLoad;
     private List<ChatLog> chatLogs;
     public static Handler revHandler;
+    private HttpURLConnection conn;
+    public String IP=Const.IP;
+    public int HTTP_PORT=Const.HTTP_PORT;
     private Handler fileHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -225,6 +234,34 @@ public class Chat extends Activity {
     }
 
     public void onBackPressed() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    URL url = new URL("http://" + IP + ":" + HTTP_PORT + "/api/chatLog/read?" + "token=" + loginMsg.getToken() + "&selfId=" + userInfo.getId() + "&friendId=" + friendId);
+                    System.out.println("===" + "http://" + IP + ":" + HTTP_PORT + "/api/chatLog/read?" + "token=" + loginMsg.getToken() + "&selfId=" + userInfo.getId() + "&friendId=" + friendId);
+                    conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    System.out.println("=====HTTP");
+                    conn.setConnectTimeout(10 * 1000);
+                    //请求头的信息
+                    conn.setRequestProperty("accept", "*/*");
+                    conn.setRequestProperty("connection", "Keep-Alive");
+                    conn.setRequestProperty("Origin", "http://" + IP);
+                    conn.connect();
+                    int code = conn.getResponseCode();
+                    System.out.println("===code" + code);
+                } catch (MalformedURLException e) {
+                    System.out.println("===error1");
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    System.out.println("===error2");
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
         Intent intent=new Intent(Chat.this,MainActivity.class);
         Bundle bundle=new Bundle();
         preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);

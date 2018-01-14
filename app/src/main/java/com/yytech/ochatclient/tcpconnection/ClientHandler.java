@@ -8,15 +8,13 @@ package com.yytech.ochatclient.tcpconnection;
 import android.content.Context;
 import android.util.Log;
 
-
 import com.yytech.ochatclient.resolver.DataResolverProxy;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 public class ClientHandler extends SimpleChannelInboundHandler<String> {
-
+    String tag = "===ClientHandler";
     private Context context;
 
     @Override
@@ -26,6 +24,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
         byte[] req = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(req);
         String messageString = new String(req);*/
+        Log.i(tag,""+msg.toString());
         DataResolverProxy.getInstance().doAction(msg.toString());
 
     }

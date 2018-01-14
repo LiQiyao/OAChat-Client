@@ -1,6 +1,5 @@
 package com.yytech.ochatclient.resolver.impl;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Message;
 
@@ -20,11 +19,12 @@ import java.lang.reflect.Type;
  */
 
 public class OnlineDTOResolver implements DataResolver {
+    private MessageDTO<OnlineDTO> onlineMsg;
     @Override
     public void resolve(String jsonMessage) {
         System.out.println("=============???" + jsonMessage);
         Type objectType = new TypeToken<MessageDTO<OnlineDTO>>(){}.getType();
-        final MessageDTO<OnlineDTO> onlineMsg = GsonUtil.getInstance().fromJson(jsonMessage, objectType);
+        onlineMsg = GsonUtil.getInstance().fromJson(jsonMessage, objectType);
         System.out.println("===loginMsg in resolver" + onlineMsg);
         if (onlineMsg.getStatus() == Const.Status.SUCCESS){
             if (FirstActivity.handler != null){

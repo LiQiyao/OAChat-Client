@@ -97,4 +97,19 @@ public class UserDetailDTO implements Serializable {
     public void setCommonFriendsCount(Integer commonFriendsCount) {
         this.commonFriendsCount = commonFriendsCount;
     }
+
+    @Override
+    public String toString() {
+        return "UserDetailDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", address='" + address + '\'' +
+                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", icon='" + icon + '\'' +
+                ", alreadyFriend=" + alreadyFriend +
+                ", commonFriendsCount=" + commonFriendsCount +
+                '}';
+    }
 }

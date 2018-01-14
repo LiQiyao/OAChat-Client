@@ -3,11 +3,10 @@ package com.yytech.ochatclient.resolver.impl;
 
 import android.os.Bundle;
 import android.os.Message;
-import android.util.Log;
 
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.MainActivity;
-import com.yytech.ochatclient.NewPeople;
+import com.yytech.ochatclient.NewPeopleActivity;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.AddFriendRequestDTO;
 import com.yytech.ochatclient.resolver.DataResolver;
@@ -20,48 +19,70 @@ import java.lang.reflect.Type;
  */
 public class AddFriendRequestDTOResolver implements DataResolver {
     private String tag ="addFriReqRe";
+    private AddFriendRequestDTO addFriendRequestDTO;
+    private MessageDTO<AddFriendRequestDTO> addFriendRequestMsg;
     @Override
     public void resolve(String jsonMessage) {
 
         Type objectType = new TypeToken<MessageDTO<AddFriendRequestDTO>>(){}.getType();
-        final MessageDTO<AddFriendRequestDTO> addFriendRequestMsg = GsonUtil.getInstance().fromJson(jsonMessage, objectType);
-        final AddFriendRequestDTO addFriendRequestDTO = addFriendRequestMsg.getData();
-        Log.i(tag,MainActivity.loginMsg.getData().getAddFriendRequestList().size()+"");
-        MainActivity.loginMsg.getData().getAddFriendRequestList().add(addFriendRequestDTO);
-        Log.i(tag,MainActivity.loginMsg.getData().getAddFriendRequestList().size()+"");
-        System.out.println("====收到消息发送好友请求的消息："+ addFriendRequestDTO+" ==accepted:"+addFriendRequestDTO.getAccepted());
-        if (NewPeople.handler != null){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Message message = new Message();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("addFriendRequestMsg",addFriendRequestMsg);
-                    message.setData(bundle);
-                    message.what = 0x123;
-                    NewPeople.handler.sendMessage(message);
-                }
-            }).start();
-            System.out.println("===!!addFriendRequestMsg send in newpeople");
+        addFriendRequestMsg = GsonUtil.getInstance().fromJson(jsonMessage, objectType);
+        addFriendRequestDTO = addFriendRequestMsg.getData();
+        System.out.println("==1==addFriReqRe"+MainActivity.loginMsg.getData().getAddFriendRequestList().size());
+        for(int i = 0;i < MainActivity.loginMsg.getData().getAddFriendRequestList().size();i++){
+            System.out.println(""+MainActivity.loginMsg.getData().getAddFriendRequestList().get(i));
         }
-        //NewPeople newPeople = new NewPeople();
-        //newPeople.addItem(null, String.valueOf(addFriendRequestDTO.getFromNickName()),addFriendRequestDTO.getFromGender());
+        Boolean hasResquest = false;
+        int once = 0;
+        for(int i = 0; i < MainActivity.loginMsg.getData().getAddFriendRequestList().size();i++){
+            if(MainActivity.loginMsg.getData().getAddFriendRequestList().get(i).getFromUserId() == addFriendRequestDTO.getFromUserId()
+                    && (!MainActivity.loginMsg.getData().getAddFriendRequestList().get(i).getAccepted() ||
+                    MainActivity.loginMsg.getData().getAddFriendRequestList().get(i).getAccepted() == null)){
+                hasResquest = true;
+            }
+        }
+        if(!hasResquest && once == 0){
+            MainActivity.loginMsg.getData().getAddFriendRequestList().add(addFriendRequestDTO);
+            System.out.println("====收到消息发送好友请求的消息："+ addFriendRequestDTO+" ==accepted:"+addFriendRequestDTO.getAccepted());
+            if (NewPeopleActivity.handler != null){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message message = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("addFriendRequestMsg",addFriendRequestMsg);
+                        message.setData(bundle);
+                        message.what = 0x123;
+                        NewPeopleActivity.handler.sendMessage(message);
+                    }
+                }).start();
+                System.out.println("===!!addFriendRequestMsg send in newpeople");
+            }else if (MainActivity.handler != null){
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Message message = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("addFriendRequestMsg",addFriendRequestMsg);
+                        message.setData(bundle);
+                        message.what = 0x234;
+                        MainActivity.handler.sendMessage(message);
+                    }
+                }).start();
+                System.out.println("===!!addFriendRequestMsg send in main");
+            }
 
 
-        if (MainActivity.handler != null){
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    Message message = new Message();
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("addFriendRequestMsg",addFriendRequestMsg);
-                    message.setData(bundle);
-                    message.what = 0x234;
-                    MainActivity.handler.sendMessage(message);
-                }
-            }).start();
-            System.out.println("===!!addFriendRequestMsg send in main");
+            once ++;
         }
+
+        System.out.println("==2==addFriReqRe"+MainActivity.loginMsg.getData().getAddFriendRequestList().size());
+        for(int i = 0;i < MainActivity.loginMsg.getData().getAddFriendRequestList().size();i++){
+            System.out.println(""+MainActivity.loginMsg.getData().getAddFriendRequestList().get(i));
+        }
+
+
+
+
 
 
     }

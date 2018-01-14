@@ -86,6 +86,7 @@ public class TCPClient {
     }
 
     public void sendMessage(MessageDTO messageDTO){
-        System.out.println("===channel in sendMsg" + channel);channel.writeAndFlush(Unpooled.copiedBuffer(GsonUtil.getInstance().toJson(messageDTO), CharsetUtil.UTF_8));
+        System.out.println("===channel in sendMsg" + channel);
+        channel.writeAndFlush(Unpooled.copiedBuffer(GsonUtil.getInstance().toJson(messageDTO), CharsetUtil.UTF_8));
     }
 }

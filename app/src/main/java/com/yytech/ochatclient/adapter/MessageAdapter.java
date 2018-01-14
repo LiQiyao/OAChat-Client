@@ -91,8 +91,6 @@ public class MessageAdapter extends BaseAdapter{
                     addFriendResponseDTO.setFromUserId((Long) data.get(position).get("fromUserId"));
                     logger.info("====messageAdapter的data："+data+" === toUserId:"+data.get(position).get("toUserId"));
 
-
-
                     TCPClient.getInstance().connect();
                     TCPClient.getInstance().sendMessage(addResponseMsg);
                     System.out.println("====发送接受对方的好友请求：【"+addResponseMsg+"】");

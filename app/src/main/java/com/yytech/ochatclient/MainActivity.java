@@ -7,6 +7,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,14 +16,11 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
-import com.yytech.ochatclient.dto.data.AddFriendSuccessDTO;
-import com.yytech.ochatclient.dto.data.ChatLog;
 import com.yytech.ochatclient.dto.data.ChatLogListDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.dto.data.UserDetailDTO;
 import com.yytech.ochatclient.dto.data.UserInfo;
-import com.yytech.ochatclient.tcpconnection.TCPClient;
 import com.yytech.ochatclient.util.GsonUtil;
 
 import java.io.BufferedReader;
@@ -35,6 +33,7 @@ import java.net.URL;
 import java.util.List;
 
 public class MainActivity extends FragmentActivity {
+    String tag = "==MainActivity";
     private MessageDTO<OnlineDTO> onlineMsg;
     public static MessageDTO<LoginResultDTO> loginMsg;
     private List<ChatLogListDTO> chatList;
@@ -44,14 +43,20 @@ public class MainActivity extends FragmentActivity {
     public static Handler handler;
     private static String IP= Const.IP;
     private static int HTTP_PORT=Const.HTTP_PORT;
-    Intent intent;
+    private Intent intent;
+    private RelativeLayout mainContentLayout;
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate( Bundle savedInstanceState) {
         //获取intent中的信息
         intent=getIntent();
         onlineMsg= (MessageDTO<OnlineDTO>) intent.getSerializableExtra("onlineMsg");
         System.out.println("===onlineMsg" + onlineMsg);
+
         super.onCreate(savedInstanceState);
+
+
 
         handler=new Handler(){
             @Override
@@ -60,11 +65,24 @@ public class MainActivity extends FragmentActivity {
                 if (msg.what==0x123)
                     ChangeTab(0);
                 if (msg.what == 0x234){
-                    Toast.makeText(getApplicationContext(),"收到一条好友请求！",Toast.LENGTH_SHORT).show();
+                    //广播
+                    Intent intent = new Intent();
+                    intent.setAction("MY_ACTION");
+                    sendBroadcast(intent);
                 }
                 if (msg.what == 0x666){
                     Toast.makeText(MainActivity.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
-                    onBackPressed();
+                }
+                //如果得到删除成功消息
+                if(msg.what == 0x999){
+
+                    Bundle detailBundle = msg.getData();
+//                    DeleteFriendSuccessDTO deleteFriendSuccessDTO = (DeleteFriendSuccessDTO) detailBundle.getSerializable("deleteFriendSuccessDTO");
+//                    Toast.makeText(MainActivity.this,"你和"+deleteFriendSuccessDTO.getDeleteFriendId()+"不再是好友关系！",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this,NewsActivity.class);
+                    intent.putExtras(detailBundle);
+                    startActivity(intent);
+//                    Log.i(tag,"你被删除了");
                 }
             }
         };
@@ -191,6 +209,17 @@ public class MainActivity extends FragmentActivity {
             transaction.commit();
             System.out.println("===loginMsg" + i);
         }
+    }
+
+    public void refresh(Bundle savedInstanceState){
+        onCreate(savedInstanceState);
+    }
+
+    public void changeEditAble(View source){
+        EditText editText = (EditText) source;
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
     }
 
 }

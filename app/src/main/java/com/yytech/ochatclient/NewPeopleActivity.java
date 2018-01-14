@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewPeople extends AppCompatActivity {
+public class NewPeopleActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private LinearLayout backLayout;
@@ -41,7 +41,8 @@ public class NewPeople extends AppCompatActivity {
     public MessageDTO<LoginResultDTO> loginMsg;
     public  MessageDTO<AddFriendRequestDTO> addFriendRequestMsg;
     public static Handler handler;
-    private String tag = "==NewPeople.java";
+    private Bundle bundle1;
+    private String tag = "==NewPeopleActivity.jav";
 
 
     @Override
@@ -50,7 +51,7 @@ public class NewPeople extends AppCompatActivity {
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_new_people);
 
-        Bundle bundle1 = getIntent().getExtras();
+        bundle1 = getIntent().getExtras();
         loginMsg = MainActivity.loginMsg;
         data = new ArrayList<Map<String, Object>>();
         addFriendRequestList = loginMsg.getData().getAddFriendRequestList();
@@ -65,20 +66,26 @@ public class NewPeople extends AppCompatActivity {
                     Bundle bundle = msg.getData();
                     addFriendRequestMsg = (MessageDTO<AddFriendRequestDTO>) bundle.getSerializable("addFriendRequestMsg");
                     AddFriendRequestDTO addFriendRequestDTO = addFriendRequestMsg.getData();
-                    Toast.makeText(getApplicationContext(),"收到一条好友请求！",Toast.LENGTH_SHORT).show();
+
+                    //广播
+                    Intent intent = new Intent();
+                    intent.setAction("MY_ACTION");
+                    sendBroadcast(intent);
 
                     addFriendRequestList = MainActivity.loginMsg.getData().getAddFriendRequestList();
                     Log.i(tag,"addFriendRequestList.size :"+addFriendRequestList.size());
                     for (int i = 0;i < addFriendRequestList.size();i++){
                         System.out.println("=====好友请求id"+addFriendRequestList.get(i).getFromUserId());
                     }
-                    addItem(null, String.valueOf(addFriendRequestDTO.getFromNickName()),addFriendRequestDTO.getFromGender());
+                    getDate();
+                    messageAdapter = new MessageAdapter(NewPeopleActivity.this,data);
+                    listView.setAdapter(messageAdapter);
                     System.out.println("====更新新朋友界面");
                 }
                 if(msg.what == 0x666){
                     listView = (ListView) findViewById(R.id.message_listview);
                     getDate();
-                    messageAdapter = new MessageAdapter(NewPeople.this,data);
+                    messageAdapter = new MessageAdapter(NewPeopleActivity.this,data);
                     listView.setAdapter(messageAdapter);
                     AddFriendSuccessDTO addFriendSuccessDTO= (AddFriendSuccessDTO) msg.getData().getSerializable("addFriendSuccessDTO");
                     ChatLog chatLog = new ChatLog();
@@ -98,7 +105,7 @@ public class NewPeople extends AppCompatActivity {
                     sendChatLog.setData(chatLog);
                     TCPClient.getInstance().sendMessage(sendChatLog);
                     System.out.println("===1188"+sendChatLog);
-                    Toast.makeText(NewPeople.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewPeopleActivity.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
                     onBackPressed();
                 }
             }
@@ -134,7 +141,7 @@ public class NewPeople extends AppCompatActivity {
         Map<String, Object> map;
         if(addFriendRequestList != null){
             getDate();
-            messageAdapter = new MessageAdapter(NewPeople.this,data);
+            messageAdapter = new MessageAdapter(NewPeopleActivity.this,data);
             listView.setAdapter(messageAdapter);
         }else {
             Toast.makeText(this,"好友请求为空！",Toast.LENGTH_SHORT).show();
@@ -151,7 +158,7 @@ public class NewPeople extends AppCompatActivity {
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Intent intent = new Intent(NewPeople.this, PersonInfo.class);
+//                Intent intent = new Intent(NewPeopleActivity.this, PersonInfoActivity.class);
 //                startActivity(intent);
 //            }
 //        });
@@ -163,9 +170,9 @@ public class NewPeople extends AppCompatActivity {
         addImageview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NewPeople.this,AddPeople.class);
+                Intent intent = new Intent(NewPeopleActivity.this,AddPeopleActivity.class);
                 //intent 必须中携带token,userId
-
+                intent.putExtras(bundle1);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
@@ -187,7 +194,7 @@ public class NewPeople extends AppCompatActivity {
                 map.put("accepted",false);
                 data.add(map);
             }
-            messageAdapter = new MessageAdapter(NewPeople.this,data);
+            messageAdapter = new MessageAdapter(NewPeopleActivity.this,data);
             listView.setAdapter(messageAdapter);
         }else{
             map.put("imgid", R.drawable.mayknow_head);
@@ -195,13 +202,13 @@ public class NewPeople extends AppCompatActivity {
             map.put("gender", gender);
             map.put("accepted",false);
             data.add(map);
-            messageAdapter = new MessageAdapter(NewPeople.this,data);
+            messageAdapter = new MessageAdapter(NewPeopleActivity.this,data);
             listView.setAdapter(messageAdapter);
         }
     }
 
     public void onBackPressed() {
-        Intent intent=new Intent(NewPeople.this,MainActivity.class);
+        Intent intent=new Intent(NewPeopleActivity.this,MainActivity.class);
         Bundle bundle=new Bundle();
         preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);
         editor = preferences.edit();

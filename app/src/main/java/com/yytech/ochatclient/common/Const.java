@@ -11,6 +11,7 @@ import java.io.File;
 public class Const {
 
     public static final String IP = "172.18.16.141";
+//    public static final String IP = "172.18.16.141";
     public static final String ftpHost="192.168.1.228";
     public static final int ftpPort=21;
     public static final String ftpUser="anonymous";

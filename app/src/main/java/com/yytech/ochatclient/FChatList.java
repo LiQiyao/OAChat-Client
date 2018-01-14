@@ -35,26 +35,27 @@ public class FChatList extends android.support.v4.app.Fragment {
     private HttpURLConnection conn;
     private TextView chatAddText;
     public String IP=Const.IP;
+    private Bundle bundle;
     public int HTTP_PORT=Const.HTTP_PORT;
+    private TextView chatAddtext;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        final Bundle bundle=getArguments();
+        bundle=getArguments();
         loginMsg= (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
         chatList = new ArrayList<>();
         for (ChatLogListDTO chatLogListDTO : loginMsg.getData().getChatLogMap().values()){
             chatList.add(chatLogListDTO);
         }
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
-        System.out.println("===1111111111111111" + loginMsg);
-            ChatListAdapter chatListAdapter = new ChatListAdapter(chatList, getActivity());
-            View view = inflater.inflate(R.layout.f_chat_list, container, false);
-            ListView chatLsit = (ListView) view.findViewById(R.id.chat_list);
+        ChatListAdapter chatListAdapter = new ChatListAdapter(chatList, getActivity());
+        View view = inflater.inflate(R.layout.f_chat_list, container, false);
+        ListView chatlist = (ListView) view.findViewById(R.id.chat_list);
         if(chatList.size()>0) {
-            chatLsit.setAdapter(chatListAdapter);
-            chatLsit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            chatlist.setAdapter(chatListAdapter);
+            chatlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     final int i = position;
@@ -97,6 +98,20 @@ public class FChatList extends android.support.v4.app.Fragment {
                 }
             });
         }
+
+        chatAddText = (TextView) view.findViewById(R.id.chat_add);
+        chatAddText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),AddPeopleActivity.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent);
+            }
+        });
+
+
+
+
         return view;
     }
 }

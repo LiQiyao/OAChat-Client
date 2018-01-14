@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,8 @@ public class FEditPersonInfo extends Fragment implements Const.Status{
     private static String IP= Const.IP;
     private static int HTTP_PORT=Const.HTTP_PORT;
     private HttpURLConnection conn;
+    private EditText editText;
+    private EditText editText1;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,11 +51,10 @@ public class FEditPersonInfo extends Fragment implements Const.Status{
 
         View view = inflater.inflate(R.layout.activity_edit_person_info,container,false);
 
-//        EditText editText = (EditText) view.findViewById(R.id.edit_personinfo_nickname);
-//        editText.setText(loginMsg.getData().getSelf().getNickName());
-//        EditText editText1 = (EditText) view.findViewById(R.id.edit_personinfo_gender);
-//        editText1.setText(loginMsg.getData().getSelf().getGender());
-
+        editText = (EditText) view.findViewById(R.id.edit_personinfo_nickname);
+        editText.setText(loginMsg.getData().getSelf().getNickName());
+        editText1 = (EditText) view.findViewById(R.id.edit_personinfo_gender);
+        editText1.setText(loginMsg.getData().getSelf().getGender());
 
         TextView cancellationView = (TextView)view.findViewById(R.id.person_info_cancellation);
         cancellationView.setOnClickListener(new View.OnClickListener() {
@@ -116,7 +118,8 @@ public class FEditPersonInfo extends Fragment implements Const.Status{
         });
 
 
-
         return view;
     }
+
+
 }

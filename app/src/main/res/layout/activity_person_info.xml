@@ -11,6 +11,20 @@
         android:layout_height="185dp"
         android:orientation="horizontal"
         android:background="@drawable/person_info_bg1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="end">
+            <TextView
+                android:id="@+id/person_info_delete_text"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textColor="#c22"
+                android:textSize="15sp"
+                android:text="删除好友"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -174,9 +188,34 @@
             />
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="166dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="5dp"
             android:src="@drawable/person_info_4" />
 
+
+        <Button
+            android:id="@+id/person_info_send_msg_btn"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="40dp"
+            android:textColor="#fff"
+            android:background="@drawable/button_shape"
+            android:text="发消息"
+            android:layout_gravity="center"
+            />
+        <Button
+            android:id="@+id/person_info_add_friend"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="40dp"
+            android:textColor="#fff"
+            android:background="@drawable/button_shape"
+            android:text="添加好友"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            />
 
     </LinearLayout>
 
