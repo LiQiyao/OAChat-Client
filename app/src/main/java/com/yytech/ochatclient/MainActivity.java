@@ -1,11 +1,16 @@
 package com.yytech.ochatclient;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,6 +39,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     String tag = "==MainActivity";
+    private boolean shouldPlayBeep = true;
     private MessageDTO<OnlineDTO> onlineMsg;
     public static MessageDTO<LoginResultDTO> loginMsg;
     private List<ChatLogListDTO> chatList;
@@ -54,6 +60,7 @@ public class MainActivity extends FragmentActivity {
         onlineMsg= (MessageDTO<OnlineDTO>) intent.getSerializableExtra("onlineMsg");
         System.out.println("===onlineMsg" + onlineMsg);
 
+
         super.onCreate(savedInstanceState);
 
 
@@ -65,10 +72,17 @@ public class MainActivity extends FragmentActivity {
                 if (msg.what==0x123)
                     ChangeTab(0);
                 if (msg.what == 0x234){
+                    Log.i(tag,"开始发出声音！");
+                    emitAddShound();
+                    Log.i(tag,"发出添加好友声！");
+
                     //广播
                     Intent intent = new Intent();
                     intent.setAction("MY_ACTION");
                     sendBroadcast(intent);
+
+
+
                 }
                 if (msg.what == 0x666){
                     Toast.makeText(MainActivity.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
@@ -220,6 +234,43 @@ public class MainActivity extends FragmentActivity {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
+    }
+
+    public void emitAddShound(){
+        //为activity注册的默认 音频通道 。
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+        //检查当前的 铃音模式，或者成为 情景模式
+        AudioManager audioService = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+            shouldPlayBeep = false;
+        }
+
+        //初始化MediaPlayer对象，指定播放的声音 通道为 STREAM_MUSIC，这和上面的步骤一致，指向了同一个通道
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        //注册事件。当播放完毕一次后，重新指向流文件的开头，以准备下次播放。
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer player) {
+                player.seekTo(0);
+            }
+        });
+
+        //设定数据源，并准备播放
+        AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.add);
+        try {
+            mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+            file.close();
+            mediaPlayer.setVolume(0.5f,0.5f);
+            mediaPlayer.prepare();
+        } catch (IOException ioe) {
+            mediaPlayer = null;
+        }
+        if (shouldPlayBeep && mediaPlayer != null) {
+            mediaPlayer.start();
+        }
     }
 
 }

@@ -1,7 +1,11 @@
 package com.yytech.ochatclient;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +28,7 @@ import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.tcpconnection.TCPClient;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +47,7 @@ public class NewPeopleActivity extends AppCompatActivity {
     public  MessageDTO<AddFriendRequestDTO> addFriendRequestMsg;
     public static Handler handler;
     private Bundle bundle1;
+    private boolean shouldPlayBeep = true;
     private String tag = "==NewPeopleActivity.jav";
 
 
@@ -66,6 +72,10 @@ public class NewPeopleActivity extends AppCompatActivity {
                     Bundle bundle = msg.getData();
                     addFriendRequestMsg = (MessageDTO<AddFriendRequestDTO>) bundle.getSerializable("addFriendRequestMsg");
                     AddFriendRequestDTO addFriendRequestDTO = addFriendRequestMsg.getData();
+
+                    Log.i(tag,"开始发出声音！");
+                    emitAddShound();
+                    Log.i(tag,"发出添加好友声！");
 
                     //广播
                     Intent intent = new Intent();
@@ -224,7 +234,42 @@ public class NewPeopleActivity extends AppCompatActivity {
     }
 
 
+    public void emitAddShound(){
+        //为activity注册的默认 音频通道 。
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
+        //检查当前的 铃音模式，或者成为 情景模式
+        AudioManager audioService = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        if (audioService.getRingerMode() != AudioManager.RINGER_MODE_NORMAL) {
+            shouldPlayBeep = false;
+        }
+
+        //初始化MediaPlayer对象，指定播放的声音 通道为 STREAM_MUSIC，这和上面的步骤一致，指向了同一个通道
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        //注册事件。当播放完毕一次后，重新指向流文件的开头，以准备下次播放。
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer player) {
+                player.seekTo(0);
+            }
+        });
+
+        //设定数据源，并准备播放
+        AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.add);
+        try {
+            mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+            file.close();
+            mediaPlayer.setVolume(0.5f,0.5f);
+            mediaPlayer.prepare();
+        } catch (IOException ioe) {
+            mediaPlayer = null;
+        }
+        if (shouldPlayBeep && mediaPlayer != null) {
+            mediaPlayer.start();
+        }
+    }
 
 
 
