@@ -60,11 +60,15 @@ public class ChatListAdapter extends BaseAdapter {
             lastMsg.setText("");
         else {
             String content=chatList.get(position).getChatLogs().get(chatList.get(position).getChatLogs().size() - 1).getContent();
+            if (content==null)
+                content=" ";
             lastMsg.setText(content);
             if (chatList.get(position).getChatLogs().get(chatList.get(position).getChatLogs().size() - 1).getContentType()== Const.ChatLogContentType.FILE){
                 lastMsg.setText("[文件]");
-                if (content.contains(".png"))
-                    lastMsg.setText("[图片]");
+                if (content.contains(".")) {
+                    if (content.contains(".png"))
+                        lastMsg.setText("[图片]");
+                }
             }
         }
         SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");

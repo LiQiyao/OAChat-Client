@@ -16,8 +16,8 @@
         >
         <ImageView
             android:id="@+id/message_pic"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@mipmap/icon_message_press"
             android:layout_alignParentTop="true"/>
         <TextView
@@ -40,8 +40,8 @@
         >
         <ImageView
             android:id="@+id/contacts_pic"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@mipmap/icon_contact_normal"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
@@ -73,8 +73,8 @@
 
         <ImageView
             android:id="@+id/somethingelse"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@mipmap/icon_set_normal"
             android:layout_marginRight="40dp"
             android:layout_marginEnd="40dp"

@@ -153,6 +153,7 @@ public class MainActivity extends FragmentActivity {
         message.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(loginMsg!=null)
                 ChangeTab(0);
             }
         });
@@ -160,6 +161,7 @@ public class MainActivity extends FragmentActivity {
         contacts.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(loginMsg!=null)
                 ChangeTab(1);
             }
         });
@@ -168,6 +170,7 @@ public class MainActivity extends FragmentActivity {
         some.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(loginMsg!=null)
                 ChangeTab(2);
             }
         });

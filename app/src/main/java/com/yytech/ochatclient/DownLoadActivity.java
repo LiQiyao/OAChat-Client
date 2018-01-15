@@ -21,7 +21,13 @@ import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.util.CallOtherOpeanFile;
 import com.yytech.ochatclient.util.MyFTPUtil;
 
+import org.apache.commons.net.ftp.FTP;
+import org.apache.commons.net.ftp.FTPClient;
+import org.apache.commons.net.ftp.FTPFile;
+import org.apache.commons.net.ftp.FTPReply;
+
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Trt on 2017/12/10.
@@ -44,6 +50,8 @@ public class DownLoadActivity extends Activity {
     private ImageView back;
     private static boolean isBreak=false;
     private static File file;
+    private FTPClient ftpClient;
+    private String code="iso-8859-1";
     public String getSDPath(){
         File sdDir = null;
         boolean sdCardExist = Environment.getExternalStorageState()
@@ -82,8 +90,16 @@ public class DownLoadActivity extends Activity {
                 }
             }
         };
-        if (!intent.getStringExtra("status").equals("myFile")) {
-            File file1 = new File(path + "/" + ftpFileName);
+        final Handler pHandler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what==0x123)
+                bar.setProgress(msg.getData().getInt("progress"));
+            }
+        };
+        if (intent.getStringExtra("status").equals("myFile")) {
+            File file1 = new File(strLocalFile);
             if (file1.exists()) {
                 downLoad.setVisibility(View.GONE);
                 stop.setVisibility(View.GONE);
@@ -97,16 +113,13 @@ public class DownLoadActivity extends Activity {
                     System.out.println("===click");
                     CallOtherOpeanFile otherOpeanFile = new CallOtherOpeanFile();
                     otherOpeanFile.openFile(DownLoadActivity.this, file);
-//                Intent intent = new Intent(Intent.ACTION_VIEW);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.setDataAndType(Uri.fromFile(file), "application/pdf");
-//                startActivity(Intent.createChooser(intent,"选择浏览工具"));
                 }
             });
         }
         else {
+            System.out.println("===11111111111");
             File file1= new File(strLocalFile);
-            File file2=new File(getSDPath()+"/OAChat/DownLoad/"+ftpFileName);
+            final File file2=new File(getSDPath()+"/OAChat/DownLoad/"+ftpFileName);
             if (file1.exists()) {
                 downLoad.setVisibility(View.GONE);
                 stop.setVisibility(View.GONE);
@@ -115,11 +128,51 @@ public class DownLoadActivity extends Activity {
                 file=file1;
             }
             else if (file2.exists()){
-                downLoad.setVisibility(View.GONE);
-                stop.setVisibility(View.GONE);
-                bar.setVisibility(View.GONE);
-                openPath.setVisibility(View.VISIBLE);
-                file=file2;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            ftpClient=new FTPClient();
+                            ftpClient.connect(ftpHost,ftpPort);// 连接FTP服务器
+                            ftpClient.setControlEncoding(code);
+                        } catch (Exception e) {
+                            System.out.println("===Open Failed"+e);
+                            return;
+                        }
+                        if (!FTPReply.isPositiveCompletion(ftpClient.getReplyCode())) {
+                            return;
+                        }
+                        try {
+                            if (ftpClient.login(ftpUser, ftpPwd)) {
+                                ftpClient.enterLocalPassiveMode();
+                                // 设置以二进制方式传输
+                                ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
+                                // 检查远程文件是否存在
+                                FTPFile[] files = ftpClient.listFiles(new String(
+                                        ftpFileName.getBytes("GBK"), code));
+                                System.out.println("===ftpFileName"+ftpFileName);
+                                if (file2.length()>=files[0].getSize()){
+                                    downLoad.setVisibility(View.GONE);
+                                    stop.setVisibility(View.GONE);
+                                    bar.setVisibility(View.GONE);
+                                    openPath.setVisibility(View.VISIBLE);
+                                    file=file2;
+                                }
+                                int per = (int) (files[0].getSize() / 100);
+                                long nowProcess = file2.length() / per;
+                                progress = (int) nowProcess;
+                                Message msg=new Message();
+                                msg.what=0x123;
+                                Bundle bundle=new Bundle();
+                                bundle.putInt("progress",progress);
+                                msg.setData(bundle);
+                                pHandler.sendMessage(msg);
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
             openPath.setOnClickListener(new View.OnClickListener() {
                 @Override

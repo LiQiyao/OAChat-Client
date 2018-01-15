@@ -85,10 +85,11 @@ public class ChatAdapter extends BaseAdapter {
             if (chatLog.getContentType()== Const.ChatLogContentType.FILE)
             {
                 final String str=chatLog.getContent();
-                    final int i=str.lastIndexOf(".");
                     final int j=str.lastIndexOf("/")+1;
+                if(str.contains(".")) {
+                    final int i = str.lastIndexOf(".");
                     //图片处理
-                    if(str.substring(i).equals(".png")||str.substring(i).equals(".jpg")) {
+                    if (str.substring(i).equals(".png") || str.substring(i).equals(".jpg")) {
                         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.chat_right);
                         layout.setBackgroundResource(R.drawable.pop_bg);
                         ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
@@ -116,6 +117,29 @@ public class ChatAdapter extends BaseAdapter {
                             }
                         });
                     }
+                    else {
+                        ((TextView) view.findViewById(R.id.tv_me_chat_message)).setText(str.substring(j));
+                        ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
+                        imageView.setImageResource(R.drawable.file);
+                        RelativeLayout.LayoutParams params;
+                        params= (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+                        params.height=300;
+                        params.width=300;
+                        imageView.setLayoutParams(params);
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent=new Intent(context,DownLoadActivity.class);
+                                Bundle bundle=new Bundle();
+                                bundle.putString("ftpFileName",str.substring(j));
+                                bundle.putString("strLocalFile",str);
+                                bundle.putString("status","myFile");
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
+                            }
+                        });
+                    }
+                }
                     //文件处理
                     else {
                         ((TextView) view.findViewById(R.id.tv_me_chat_message)).setText(str.substring(j));
@@ -156,47 +180,71 @@ public class ChatAdapter extends BaseAdapter {
             msgTime.setText(lStrDate);
             if (chatLog.getContentType()== Const.ChatLogContentType.FILE) {
                 final String str1 = chatLog.getContent();
-                int i = str1.lastIndexOf(".");
                 final int j = str1.lastIndexOf("/") + 1;
-                //图片处理
-                if (str1.substring(i).equals(".png")||str1.substring(i).equals(".jpg")) {
-                    RelativeLayout layout= (RelativeLayout) view.findViewById(R.id.chat_left);
-                    layout.setBackgroundResource(R.drawable.pop_bg);
-                    File file=new File(getSDPath()+"/OAChat/DownLoad/"+str1.substring(j));
-                    ImageView imageView= (ImageView) view.findViewById(R.id.chat_image);
-                    if (file.exists()){
-                        Bitmap bitmap=getDiskBitmap(getSDPath()+"/OAChat/DownLoad/"+str1.substring(j));
-                        imageView.setImageBitmap(bitmap);
-                    }
-                    else{
-                        MyFTPUtil myFTPUtil=new MyFTPUtil();
-                        myFTPUtil.downLoadImage(Const.ftpHost,Const.ftpPort,Const.ftpUser,Const.ftpPwd,str1.substring(j),getSDPath()+"/OAChat/DownLoad/");
-                        while (file.exists()) {
+                if (str1.contains(".")) {
+                    int i = str1.lastIndexOf(".");
+                    //图片处理
+                    if (str1.substring(i).equals(".png") || str1.substring(i).equals(".jpg")) {
+                        RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.chat_left);
+                        layout.setBackgroundResource(R.drawable.pop_bg);
+                        File file = new File(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j));
+                        ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
+                        if (file.exists()) {
                             Bitmap bitmap = getDiskBitmap(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j));
                             imageView.setImageBitmap(bitmap);
+                        } else {
+                            MyFTPUtil myFTPUtil = new MyFTPUtil();
+                            myFTPUtil.downLoadImage(Const.ftpHost, Const.ftpPort, Const.ftpUser, Const.ftpPwd, str1.substring(j), getSDPath() + "/OAChat/DownLoad/");
+                            while (file.exists()) {
+                                Bitmap bitmap = getDiskBitmap(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j));
+                                imageView.setImageBitmap(bitmap);
+                            }
                         }
+                        RelativeLayout.LayoutParams params;
+                        params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+                        imageView.setLayoutParams(params);
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                LayoutInflater inflater = LayoutInflater.from(context);
+                                View imgEntryView = inflater.inflate(R.layout.dialog_photo_entry, null); // 加载自定义的布局文件
+                                final AlertDialog dialog = new AlertDialog.Builder(context).create();
+                                ImageView img = (ImageView) imgEntryView.findViewById(R.id.large_image);
+                                img.setImageBitmap(getDiskBitmap(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j)));
+                                dialog.setView(imgEntryView); // 自定义dialog
+                                dialog.show();
+                                // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
+                                imgEntryView.setOnClickListener(new View.OnClickListener() {
+                                    public void onClick(View paramView) {
+                                        dialog.cancel();
+                                    }
+                                });
+                            }
+                        });
                     }
-                    RelativeLayout.LayoutParams params;
-                    params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-                    imageView.setLayoutParams(params);
-                    imageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            LayoutInflater inflater = LayoutInflater.from(context);
-                            View imgEntryView = inflater.inflate(R.layout.dialog_photo_entry, null); // 加载自定义的布局文件
-                            final AlertDialog dialog = new AlertDialog.Builder(context).create();
-                            ImageView img = (ImageView) imgEntryView.findViewById(R.id.large_image);
-                            img.setImageBitmap(getDiskBitmap(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j)));
-                            dialog.setView(imgEntryView); // 自定义dialog
-                            dialog.show();
-                            // 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
-                            imgEntryView.setOnClickListener(new View.OnClickListener() {
-                                public void onClick(View paramView) {
-                                    dialog.cancel();
-                                }
-                            });
-                        }
-                    });
+                    else {
+                        ((TextView) view.findViewById(R.id.tv_chat_me_message)).setText(str1.substring(j));
+                        System.out.println("===1111111111111" + str1.substring(j));
+                        ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
+                        imageView.setImageResource(R.drawable.file);
+                        RelativeLayout.LayoutParams params;
+                        params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+                        params.height = 300;
+                        params.width = 300;
+                        imageView.setLayoutParams(params);
+                        imageView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent=new Intent(context,DownLoadActivity.class);
+                                Bundle bundle=new Bundle();
+                                bundle.putString("ftpFileName",str1.substring(j));
+                                bundle.putString("strLocalFile","");
+                                bundle.putString("status","1");
+                                intent.putExtras(bundle);
+                                context.startActivity(intent);
+                            }
+                        });
+                    }
                 }
 //                //文件处理
                 else {
