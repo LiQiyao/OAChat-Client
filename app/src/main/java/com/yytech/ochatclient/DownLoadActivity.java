@@ -96,16 +96,30 @@ public class DownLoadActivity extends Activity {
                 super.handleMessage(msg);
                 if (msg.what==0x123)
                 bar.setProgress(msg.getData().getInt("progress"));
+                if (msg.what==0x456){
+                    downLoad.setVisibility(View.GONE);
+                    stop.setVisibility(View.GONE);
+                    bar.setVisibility(View.GONE);
+                    openPath.setVisibility(View.VISIBLE);
+                }
             }
         };
         if (intent.getStringExtra("status").equals("myFile")) {
             File file1 = new File(strLocalFile);
+            File file2=new File(getSDPath()+"/OAChat/DownLoad/"+ftpFileName);
             if (file1.exists()) {
                 downLoad.setVisibility(View.GONE);
                 stop.setVisibility(View.GONE);
                 bar.setVisibility(View.GONE);
                 openPath.setVisibility(View.VISIBLE);
                 file=file1;
+            }
+            else if(file2.exists()){
+                downLoad.setVisibility(View.GONE);
+                stop.setVisibility(View.GONE);
+                bar.setVisibility(View.GONE);
+                openPath.setVisibility(View.VISIBLE);
+                file=file2;
             }
             openPath.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,7 +131,6 @@ public class DownLoadActivity extends Activity {
             });
         }
         else {
-            System.out.println("===11111111111");
             File file1= new File(strLocalFile);
             final File file2=new File(getSDPath()+"/OAChat/DownLoad/"+ftpFileName);
             if (file1.exists()) {
@@ -152,10 +165,9 @@ public class DownLoadActivity extends Activity {
                                         ftpFileName.getBytes("GBK"), code));
                                 System.out.println("===ftpFileName"+ftpFileName);
                                 if (file2.length()>=files[0].getSize()){
-                                    downLoad.setVisibility(View.GONE);
-                                    stop.setVisibility(View.GONE);
-                                    bar.setVisibility(View.GONE);
-                                    openPath.setVisibility(View.VISIBLE);
+                                    Message msg1=new Message();
+                                    msg1.what=0x456;
+                                    pHandler.sendMessage(msg1);
                                     file=file2;
                                 }
                                 int per = (int) (files[0].getSize() / 100);
