@@ -110,6 +110,7 @@ public class FChatList extends android.support.v4.app.Fragment {
                 Intent intent = new Intent(getContext(),AddPeopleActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
+                getActivity().finish();
             }
         });
 

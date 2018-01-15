@@ -12,8 +12,8 @@
         />
     <com.yytech.ochatclient.oaview.XCRoundImageView
         android:id="@+id/head"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="top"
         android:src="@drawable/mayknow_head"
         android:layout_marginTop="20dp"

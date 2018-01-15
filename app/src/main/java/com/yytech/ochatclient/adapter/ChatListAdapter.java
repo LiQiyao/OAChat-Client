@@ -14,7 +14,6 @@ import com.yytech.ochatclient.dto.data.ChatLogListDTO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Trt on 2017/12/13.

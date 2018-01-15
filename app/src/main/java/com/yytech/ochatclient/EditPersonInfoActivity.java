@@ -12,7 +12,7 @@ public class EditPersonInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.activity_edit_person_info);
+        setContentView(R.layout.f_edit_person_info);
     }
 
     public void back(View source){

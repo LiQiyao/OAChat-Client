@@ -23,7 +23,6 @@ public class AddFriendRequestDTOResolver implements DataResolver {
     private MessageDTO<AddFriendRequestDTO> addFriendRequestMsg;
     @Override
     public void resolve(String jsonMessage) {
-
         Type objectType = new TypeToken<MessageDTO<AddFriendRequestDTO>>(){}.getType();
         addFriendRequestMsg = GsonUtil.getInstance().fromJson(jsonMessage, objectType);
         addFriendRequestDTO = addFriendRequestMsg.getData();

@@ -10,8 +10,11 @@ import android.widget.Toast;
  */
 
 public class addFriendRequestBroad extends BroadcastReceiver {
+
     @Override
     public void onReceive(Context context, Intent intent) {
         Toast.makeText(context,"收到一条好友请求！",Toast.LENGTH_SHORT).show();
+
+
     }
 }
