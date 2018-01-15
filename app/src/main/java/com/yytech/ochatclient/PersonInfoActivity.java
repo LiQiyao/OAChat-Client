@@ -185,6 +185,7 @@ public class PersonInfoActivity extends AppCompatActivity implements Const.Statu
         }
     }
     public void onBackPressed() {
+        handler = null;
         Intent intent=new Intent(PersonInfoActivity.this,MainActivity.class);
         Bundle bundle=new Bundle();
         preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);

@@ -35,7 +35,7 @@ public class AddFriendSuccessDTOResolver implements DataResolver {
         }
 
         //向新朋友界面发送添加好友成功响应信息
-
+        if(NewPeopleActivity.handler != null){
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -48,6 +48,8 @@ public class AddFriendSuccessDTOResolver implements DataResolver {
                     Log.i(tag,"向NewPeople发送好友添加成功消息");
                 }
             }).start();
+        }
+
 
 //        if(NewPeopleActivity.handler != null){
 //            new Thread(new Runnable() {

@@ -219,6 +219,7 @@ public class NewPeopleActivity extends AppCompatActivity {
     }
 
     public void onBackPressed() {
+        NewPeopleActivity.handler = null;
         Intent intent=new Intent(NewPeopleActivity.this,MainActivity.class);
         Bundle bundle=new Bundle();
         preferences = getSharedPreferences("userIdAndToken",MODE_PRIVATE);
