@@ -49,6 +49,7 @@ public class NewPeopleActivity extends AppCompatActivity {
     private Bundle bundle1;
     private boolean shouldPlayBeep = true;
     private String tag = "==NewPeopleActivity.jav";
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
 
 
     @Override
@@ -74,7 +75,7 @@ public class NewPeopleActivity extends AppCompatActivity {
                     AddFriendRequestDTO addFriendRequestDTO = addFriendRequestMsg.getData();
 
                     Log.i(tag,"开始发出声音！");
-                    emitAddShound();
+                    emitAddShound(R.raw.add);
                     Log.i(tag,"发出添加好友声！");
 
                     //广播
@@ -132,7 +133,7 @@ public class NewPeopleActivity extends AppCompatActivity {
             map = new HashMap<String, Object>();
             map.put("toUserId",addFriendRequestList.get(i).getToUserId());
             map.put("fromUserId",addFriendRequestList.get(i).getFromUserId());
-            map.put("imgid", R.drawable.mine_avatar);
+            map.put("imgid", heads[Integer.parseInt(addFriendRequestList.get(i).getFromIcon())-1]);
             map.put("nickname", addFriendRequestList.get(i).getFromNickName());
             map.put("gender", addFriendRequestList.get(i).getFromGender());
             map.put("accepted",addFriendRequestList.get(i).getAccepted());
@@ -198,7 +199,7 @@ public class NewPeopleActivity extends AppCompatActivity {
             for(int i=0;i<addFriendRequestList.size();i++)
             {
                 map = new HashMap<String, Object>();
-                map.put("imgid", R.drawable.mayknow_head);
+                map.put("imgid", heads[Integer.parseInt(addFriendRequestList.get(i).getFromIcon())]-1);
                 map.put("nickname", addFriendRequestList.get(i).getFromNickName());
                 map.put("gender", addFriendRequestList.get(i).getFromGender());
                 map.put("accepted",false);
@@ -234,7 +235,7 @@ public class NewPeopleActivity extends AppCompatActivity {
     }
 
 
-    public void emitAddShound(){
+    public void emitAddShound(int sound){
         //为activity注册的默认 音频通道 。
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -257,7 +258,7 @@ public class NewPeopleActivity extends AppCompatActivity {
         });
 
         //设定数据源，并准备播放
-        AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.add);
+        AssetFileDescriptor file = getResources().openRawResourceFd(sound);
         try {
             mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
             file.close();

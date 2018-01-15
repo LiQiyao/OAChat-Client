@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -21,10 +23,9 @@ import android.widget.Toast;
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
-import com.yytech.ochatclient.dto.data.ChatLogListDTO;
+import com.yytech.ochatclient.dto.data.ChatLog;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
-import com.yytech.ochatclient.dto.data.UserDetailDTO;
 import com.yytech.ochatclient.dto.data.UserInfo;
 import com.yytech.ochatclient.util.GsonUtil;
 
@@ -35,22 +36,21 @@ import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity {
     String tag = "==MainActivity";
     private boolean shouldPlayBeep = true;
     private MessageDTO<OnlineDTO> onlineMsg;
     public static MessageDTO<LoginResultDTO> loginMsg;
-    private List<ChatLogListDTO> chatList;
-    private List<UserDetailDTO> friendList;
     private UserInfo userInfo;
     private HttpURLConnection conn;
     public static Handler handler;
+    public static  Handler msgHandler;
     private static String IP= Const.IP;
     private static int HTTP_PORT=Const.HTTP_PORT;
     private Intent intent;
     private RelativeLayout mainContentLayout;
+    private int tab;
 
 
     @Override
@@ -73,7 +73,7 @@ public class MainActivity extends FragmentActivity {
                     ChangeTab(0);
                 if (msg.what == 0x234){
                     Log.i(tag,"开始发出声音！");
-                    emitAddShound();
+                    emitAddShound(R.raw.add);
                     Log.i(tag,"发出添加好友声！");
 
                     //广播
@@ -81,22 +81,36 @@ public class MainActivity extends FragmentActivity {
                     intent.setAction("MY_ACTION");
                     sendBroadcast(intent);
 
-
-
                 }
                 if (msg.what == 0x666){
                     Toast.makeText(MainActivity.this,"添加好友成功！",Toast.LENGTH_SHORT).show();
                 }
                 //如果得到删除成功消息
                 if(msg.what == 0x999){
-
                     Bundle detailBundle = msg.getData();
-//                    DeleteFriendSuccessDTO deleteFriendSuccessDTO = (DeleteFriendSuccessDTO) detailBundle.getSerializable("deleteFriendSuccessDTO");
-//                    Toast.makeText(MainActivity.this,"你和"+deleteFriendSuccessDTO.getDeleteFriendId()+"不再是好友关系！",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this,NewsActivity.class);
                     intent.putExtras(detailBundle);
                     startActivity(intent);
-//                    Log.i(tag,"你被删除了");
+                    finish();
+                }
+            }
+        };
+        msgHandler=new Handler(){
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+
+                if (msg.what==0x789 && !isDestroyed()){
+                    ChatLog chatLog= (ChatLog) msg.obj;
+                    loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).setUnReadChatLogCount(loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getUnReadChatLogCount()+1);
+                    loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getChatLogs().add(chatLog);
+                    if(tab==0)
+                    ChangeTab(0);
+
+                    //发出消息提示音
+                    emitAddShound(R.raw.dididi);
                 }
             }
         };
@@ -130,7 +144,6 @@ public class MainActivity extends FragmentActivity {
                         loginMsg = GsonUtil.getInstance().fromJson(result, objectType);
                         userInfo=loginMsg.getData().getSelf();
                         handler.sendEmptyMessage(0x123);
-//                        ChangeTab(0);
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -182,6 +195,7 @@ public class MainActivity extends FragmentActivity {
         android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         if(i==0){
+            tab=0;
             message.setImageResource(R.mipmap.icon_message_press);
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_normal);
@@ -196,6 +210,7 @@ public class MainActivity extends FragmentActivity {
             System.out.println("===loginMsg" + i);
         }
         if(i==1){
+            tab=1;
             message.setImageResource(R.mipmap.icon_message_normal);
             contacts.setImageResource(R.mipmap.icon_contact_press);
             install.setImageResource(R.mipmap.icon_set_normal);
@@ -210,6 +225,7 @@ public class MainActivity extends FragmentActivity {
             System.out.println("===loginMsg" + i);
         }
         if(i==2){
+            tab=3;
             message.setImageResource(R.mipmap.icon_message_normal);
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_press);
@@ -236,7 +252,7 @@ public class MainActivity extends FragmentActivity {
         editText.requestFocus();
     }
 
-    public void emitAddShound(){
+    public void emitAddShound(int sound){
         //为activity注册的默认 音频通道 。
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
@@ -259,7 +275,7 @@ public class MainActivity extends FragmentActivity {
         });
 
         //设定数据源，并准备播放
-        AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.add);
+        AssetFileDescriptor file = getResources().openRawResourceFd(sound);
         try {
             mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
             file.close();

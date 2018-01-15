@@ -17,7 +17,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="5dp"
         android:layout_marginStart="5dp"
-        android:src="@mipmap/search_bar_icon"
+        android:src="@drawable/search"
         android:layout_alignBottom="@+id/editText" />
 
     <EditText
@@ -41,5 +41,5 @@
         android:layout_marginStart="5dp"
         android:layout_toEndOf="@+id/editText"
         android:layout_toRightOf="@+id/editText"
-        android:src="@mipmap/search_clear" />
+        android:src="@drawable/clean" />
 </RelativeLayout>

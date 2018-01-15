@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -40,6 +41,7 @@ public class DownLoadActivity extends Activity {
     private TextView name;
     private Button openPath;
     private ProgressBar bar;
+    private ImageView back;
     private static boolean isBreak=false;
     private static File file;
     public String getSDPath(){
@@ -61,6 +63,7 @@ public class DownLoadActivity extends Activity {
         path=path;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
+        back= (ImageView) findViewById(R.id.back);
         downLoad= (Button) findViewById(R.id.download);
         stop= (Button) findViewById(R.id.stop);
         bar= (ProgressBar) findViewById(R.id.bar);
@@ -126,6 +129,12 @@ public class DownLoadActivity extends Activity {
                 }
             });
         }
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

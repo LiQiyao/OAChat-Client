@@ -46,7 +46,6 @@ public class FilePathList extends Activity{
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (currentFiles[position].isFile()) {
                     try {
-                        Toast.makeText(FilePathList.this, "当前路径不可访问"+currentParent.getCanonicalPath()+currentFiles[position].getName(), Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(FilePathList.this,UpLoadActivity.class);
                         Bundle bundle=new Bundle();
                         bundle.putString("path",currentParent.getCanonicalPath());

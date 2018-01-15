@@ -14,8 +14,8 @@
         android:layout_marginLeft="10dp">
         <com.yytech.ochatclient.oaview.XCRoundImageView
             android:id="@+id/headview"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@drawable/mine_avatar"
             android:gravity="center_vertical"
             />

@@ -1,5 +1,6 @@
 package com.yytech.ochatclient;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,14 +8,16 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.util.MyFTPUtil;
 
-public class UpLoadActivity extends AppCompatActivity {
+public class UpLoadActivity extends Activity {
 
     private String ftpHost=Const.ftpHost;
     private  int ftpPort=21;
@@ -28,6 +31,7 @@ public class UpLoadActivity extends AppCompatActivity {
     private Button upLoad;
     private Button stop;
     private TextView name;
+    private ImageView back;
     private ProgressBar bar;
     private static boolean isBreak=false;
     @Override
@@ -40,11 +44,19 @@ public class UpLoadActivity extends AppCompatActivity {
         ftpFileName=fileName;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
+        back= (ImageView) findViewById(R.id.back);
         upLoad= (Button) findViewById(R.id.upload);
         stop= (Button) findViewById(R.id.stop);
         bar= (ProgressBar) findViewById(R.id.bar);
         name= (TextView) findViewById(R.id.name);
         name.setText(fileName);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +82,7 @@ public class UpLoadActivity extends AppCompatActivity {
                             myUFTPUtil.isBreak=isBreak;
                             bar.setProgress(progress);
                             if (progress==100){
-                                Intent intent1=new Intent(UpLoadActivity.this,Chat.class);
+                                Intent intent1=new Intent(UpLoadActivity.this,ChatActivity.class);
                                 Bundle bundle=new Bundle();
                                 bundle.putString("strLocalFile",strLocalFile);
                                 intent1.putExtras(bundle);

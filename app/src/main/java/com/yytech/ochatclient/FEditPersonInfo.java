@@ -49,6 +49,7 @@ public class FEditPersonInfo extends Fragment implements Const.Status{
     private String updateGender;
     private String updateTel;
     private Handler handler;
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,11 +73,13 @@ public class FEditPersonInfo extends Fragment implements Const.Status{
         loginMsg= (MessageDTO<LoginResultDTO>) bundle.getSerializable("loginMsg");
         userInfo = loginMsg.getData().getSelf();
 
-        View view = inflater.inflate(R.layout.activity_edit_person_info,container,false);
+        View view = inflater.inflate(R.layout.f_edit_person_info,container,false);
 
         nicknameEdit = (EditText) view.findViewById(R.id.edit_personinfo_nickname);
         genderEdit = (EditText) view.findViewById(R.id.edit_personinfo_gender);
         telEdit = (EditText) view.findViewById(R.id.edit_personinfo_tel);
+        ImageView head= (ImageView) view.findViewById(R.id.head);
+        head.setImageResource(heads[Integer.parseInt(userInfo.getIcon())-1]);
         nicknameEdit.setText(userInfo.getNickName());
         genderEdit.setText(userInfo.getGender());
         telEdit.setText(userInfo.getTelephoneNumber());

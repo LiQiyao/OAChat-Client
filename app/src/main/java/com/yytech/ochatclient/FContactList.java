@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.yytech.ochatclient.adapter.MyExpandableListViewAdapter;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.UserDetailDTO;
@@ -28,6 +30,7 @@ public class FContactList extends android.support.v4.app.Fragment {
     private TextView contactAddText;
     private LinearLayout newpeopleLinear;
     private Bundle bundle;
+    private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
 
 //    @Override
 //    public void onAttach(Context context) {
@@ -45,6 +48,8 @@ public class FContactList extends android.support.v4.app.Fragment {
         friendList=loginMsg.getData().getFriendList();
         userInfo= (UserInfo) bundle.getSerializable("userInfo");
         View view=inflater.inflate(R.layout.f_contact_list,container,false);
+        ImageView head= (ImageView) view.findViewById(R.id.head);
+        head.setImageResource(heads[Integer.parseInt(userInfo.getIcon())-1]);
         //添加按钮事件
         contactAddText = (TextView) view.findViewById(R.id.contact_add);
         contactAddText.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +58,7 @@ public class FContactList extends android.support.v4.app.Fragment {
                 Intent intent = new Intent(getContext(),AddPeopleActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent);
+                getActivity().finish();
             }
         });
 

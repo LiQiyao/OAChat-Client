@@ -6,7 +6,9 @@ import java.io.Serializable;
  * Created by Lee on 2017/11/23.
  * 通讯协议
  */
-public class MessageDTO<T> implements Serializable{
+public class MessageDTO<T> implements Serializable {
+
+    private String version;
 
     /**
     * data的类名，首字母小写 "loginResult"
@@ -38,6 +40,13 @@ public class MessageDTO<T> implements Serializable{
     public MessageDTO() {
     }
 
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
     public String getDataName() {
         return dataName;
@@ -93,18 +102,5 @@ public class MessageDTO<T> implements Serializable{
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    @Override
-    public String toString() {
-        return "MessageDTO{" +
-                "dataName='" + dataName + '\'' +
-                ", status=" + status +
-                ", statusDetail='" + statusDetail + '\'' +
-                ", sign=" + sign +
-                ", data=" + data +
-                ", userId=" + userId +
-                ", token='" + token + '\'' +
-                '}';
     }
 }

@@ -37,14 +37,9 @@
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/mine_avatar" />
-
-        <ImageView
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="-90dp"
-            android:background="@drawable/person_info_headborder" />
+            android:src="@drawable/mine_avatar"
+            android:id="@+id/head"
+            />
 
         <TextView
             android:id="@+id/person_info_nickname"

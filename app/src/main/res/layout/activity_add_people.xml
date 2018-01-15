@@ -60,7 +60,7 @@
             android:layout_gravity="center"
             android:hint="  qq号/好友名"
             android:iconifiedByDefault="false"
-            android:drawableLeft="@mipmap/search_bar_icon"
+            android:drawableLeft="@drawable/search"
             android:imeOptions="actionSearch"
             android:gravity="center_vertical"
             android:singleLine="true"

@@ -9,37 +9,18 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:background="#fff"
         >
-        <LinearLayout
-            android:id="@+id/add_people_backLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:onClick="back"
-            >
-            <ImageView
-                android:id="@+id/add_people_backImgView"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/left"
-                android:layout_marginRight="2dp"
-
-                />
-            <TextView
-                android:id="@+id/add_people_textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="返回"
-                android:textColor="@color/qq_text_color"
-                />
-        </LinearLayout>
+        <com.yytech.ochatclient.oaview.RoundImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/mine_avatar"
+            android:layout_alignBottom="@+id/imageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_margin="7.5dp"
+            android:id="@+id/head" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

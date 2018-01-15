@@ -14,7 +14,6 @@ import com.yytech.ochatclient.dto.data.ChatLogListDTO;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.zip.Inflater;
 
 /**
  * Created by Trt on 2017/12/13.
@@ -23,6 +22,7 @@ import java.util.zip.Inflater;
 public class ChatListAdapter extends BaseAdapter {
     private List<ChatLogListDTO> chatList;
     private Context context;
+    private int[] head=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
     public ChatListAdapter(List<ChatLogListDTO> chatList,Context context){
         super();
         this.chatList=chatList;
@@ -46,9 +46,10 @@ public class ChatListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (chatList==null)
             return null;
+
         View view=View.inflate(context, R.layout.simple_item,null);
         ImageView header= (ImageView) view.findViewById(R.id.header);
-        header.setImageResource(R.mipmap.ic_launcher);
+        header.setImageResource(head[Integer.parseInt(chatList.get(position).getFriendIcon())-1]);
         TextView name= (TextView) view.findViewById(R.id.name);
         TextView lastMsg= (TextView) view.findViewById(R.id.lastMsg);
         TextView lastChatLogTime= (TextView) view.findViewById(R.id.lastChatLogTime);
@@ -60,9 +61,9 @@ public class ChatListAdapter extends BaseAdapter {
             String content=chatList.get(position).getChatLogs().get(chatList.get(position).getChatLogs().size() - 1).getContent();
             lastMsg.setText(content);
             if (chatList.get(position).getChatLogs().get(chatList.get(position).getChatLogs().size() - 1).getContentType()== Const.ChatLogContentType.FILE){
+                lastMsg.setText("[文件]");
                 if (content.contains(".png"))
                     lastMsg.setText("[图片]");
-                lastMsg.setText("[文件]");
             }
         }
         SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");
