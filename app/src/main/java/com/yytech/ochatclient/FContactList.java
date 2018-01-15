@@ -94,6 +94,7 @@ public class FContactList extends android.support.v4.app.Fragment {
                         detailBundle.putString("token",loginMsg.getToken());
                         intent.putExtras(detailBundle);
                         startActivity(intent);
+                        getActivity().finish();
                     }
                         return true;
                 }

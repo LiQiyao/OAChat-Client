@@ -65,7 +65,8 @@ public class ChatListAdapter extends BaseAdapter {
             if (chatList.get(position).getChatLogs().get(chatList.get(position).getChatLogs().size() - 1).getContentType()== Const.ChatLogContentType.FILE){
                 lastMsg.setText("[文件]");
                 if (content.contains(".")) {
-                    if (content.contains(".png"))
+                    if (content.contains(".png")||content.contains(".jpg")||content.contains(".bmp")||content.contains(".tiff")
+                            ||content.contains(".gif")||content.contains(".pcd"))
                         lastMsg.setText("[图片]");
                 }
             }

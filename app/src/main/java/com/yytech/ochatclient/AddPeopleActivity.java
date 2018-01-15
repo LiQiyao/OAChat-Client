@@ -85,6 +85,7 @@ public class AddPeopleActivity extends AppCompatActivity implements Const.Status
                             detailBundle.putSerializable("userDetailDTO",userDetailDTO);
                             intent.putExtras(detailBundle);
                             startActivity(intent);
+                            finish();
                         }
                     });
                 }

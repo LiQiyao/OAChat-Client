@@ -89,10 +89,13 @@ public class ChatAdapter extends BaseAdapter {
                 if(str.contains(".")) {
                     final int i = str.lastIndexOf(".");
                     //图片处理
-                    if (str.substring(i).equals(".png") || str.substring(i).equals(".jpg")) {
+                    if (str.substring(i).equals(".png") || str.substring(i).equals(".jpg")||
+                            str.substring(i).equals(".bmp") || str.substring(i).equals(".tiff")||
+                            str.substring(i).equals(".gif") || str.substring(i).equals(".pcd")){
                         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.chat_right);
                         layout.setBackgroundResource(R.drawable.pop_bg);
                         ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
+                        imageView.setImageResource(R.drawable.loading);
                         System.out.println("===" + str.substring(i));
                         imageView.setImageBitmap(getDiskBitmap(str));
                         RelativeLayout.LayoutParams params;
@@ -184,11 +187,14 @@ public class ChatAdapter extends BaseAdapter {
                 if (str1.contains(".")) {
                     int i = str1.lastIndexOf(".");
                     //图片处理
-                    if (str1.substring(i).equals(".png") || str1.substring(i).equals(".jpg")) {
+                    if (str1.substring(i).equals(".png") || str1.substring(i).equals(".jpg")||
+                            str1.substring(i).equals(".bmp") || str1.substring(i).equals(".tiff")||
+                            str1.substring(i).equals(".gif") || str1.substring(i).equals(".pcd")) {
                         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.chat_left);
                         layout.setBackgroundResource(R.drawable.pop_bg);
                         File file = new File(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j));
                         ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
+                        imageView.setImageResource(R.drawable.loading);
                         if (file.exists()) {
                             Bitmap bitmap = getDiskBitmap(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j));
                             imageView.setImageBitmap(bitmap);
