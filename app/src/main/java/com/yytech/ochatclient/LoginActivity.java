@@ -158,6 +158,8 @@ public class LoginActivity extends AppCompatActivity implements Const.Status{
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
+                        } finally {
+                            conn.disconnect();
                         }
                     }
                 }).start();

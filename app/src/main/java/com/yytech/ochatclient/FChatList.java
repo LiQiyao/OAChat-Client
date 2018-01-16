@@ -88,6 +88,9 @@ public class FChatList extends android.support.v4.app.Fragment {
                                     System.out.println("===error2");
                                     e.printStackTrace();
                                 }
+                                finally {
+                                    conn.disconnect();
+                                }
                             }
                         }).start();
                     }

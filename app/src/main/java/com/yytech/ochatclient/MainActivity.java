@@ -161,6 +161,9 @@ public class MainActivity extends FragmentActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                finally {
+                    conn.disconnect();
+                }
             }
         }).start();
         setContentView(R.layout.activity_main);

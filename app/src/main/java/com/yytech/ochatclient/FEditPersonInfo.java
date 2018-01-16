@@ -218,6 +218,9 @@ public class FEditPersonInfo extends Fragment implements Const.Status{
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        finally {
+                            conn.disconnect();
+                        }
                     }
                 }).start();
             }

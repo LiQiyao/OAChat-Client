@@ -264,6 +264,9 @@ public class ChatActivity extends Activity {
                     System.out.println("===error2");
                     e.printStackTrace();
                 }
+                finally {
+                    conn.disconnect();
+                }
             }
         }).start();
 

@@ -33,7 +33,6 @@ public class AddPeopleAdapter extends BaseAdapter implements Const.Status{
     private LayoutInflater mInflater = null;
     private List<Map<String,Object>> data;
     private Context context;
-    private HttpURLConnection conn;
     private MessageDTO<LoginResultDTO> loginMsg;
     private UserInfo userInfo;
     public String IP= Const.IP;

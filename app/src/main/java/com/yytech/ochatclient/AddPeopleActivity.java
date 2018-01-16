@@ -206,6 +206,9 @@ public class AddPeopleActivity extends AppCompatActivity implements Const.Status
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                finally {
+                    conn.disconnect();
+                }
             }
         }).start();
     }
