@@ -103,11 +103,19 @@ public class MainActivity extends FragmentActivity {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
 
-
+                int count=0;
                 if (msg.what==0x789 && !isDestroyed()){
                     ChatLog chatLog= (ChatLog) msg.obj;
-                    loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).setUnReadChatLogCount(loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getUnReadChatLogCount()+1);
-                    loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getChatLogs().add(chatLog);
+                    if(loginMsg.getData().getChatLogMap().get(chatLog.getSenderId())==null) {
+                        Intent intent=new Intent(MainActivity.this,FirstAddSuccessActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else{
+                        count=loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getUnReadChatLogCount()+1;
+                        loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).setUnReadChatLogCount(count);
+                        loginMsg.getData().getChatLogMap().get(chatLog.getSenderId()).getChatLogs().add(chatLog);
+                    }
                     if(tab==0)
                     ChangeTab(0);
 
