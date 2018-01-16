@@ -2,6 +2,7 @@ package com.yytech.ochatclient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.AddFriendRequestDTO;
@@ -54,6 +56,7 @@ public class PersonInfoActivity extends AppCompatActivity implements Const.Statu
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.activity_person_info);
 
         handler = new Handler(){

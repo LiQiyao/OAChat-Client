@@ -2,9 +2,11 @@ package com.yytech.ochatclient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
 
@@ -15,6 +17,7 @@ public class FirstAddSuccessActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.activity_first_add_success);
 
         Intent intent=new Intent(FirstAddSuccessActivity.this,MainActivity.class);

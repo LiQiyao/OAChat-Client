@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.adapter.MessageAdapter;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
@@ -56,6 +58,7 @@ public class NewPeopleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.activity_new_people);
 
         bundle1 = getIntent().getExtras();

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
@@ -51,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements Const.Status{
         verifyStoragePermissions(this);
         context = this;
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
 

@@ -1,9 +1,12 @@
 package com.yytech.ochatclient;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+
+import com.githang.statusbar.StatusBarCompat;
 
 public class EditPersonInfoActivity extends AppCompatActivity {
 
@@ -11,7 +14,7 @@ public class EditPersonInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.f_edit_person_info);
     }
 

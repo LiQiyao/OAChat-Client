@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.adapter.ChatAdapter;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
@@ -103,8 +104,7 @@ public class ChatActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.hide();
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.activity_chat);
         final Intent intent=getIntent();
         userInfo= (UserInfo) intent.getSerializableExtra("userInfo");
