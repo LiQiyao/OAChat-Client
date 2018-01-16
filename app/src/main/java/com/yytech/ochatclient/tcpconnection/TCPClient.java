@@ -4,6 +4,7 @@ package com.yytech.ochatclient.tcpconnection;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.util.GsonUtil;
+import com.yytech.ochatclient.util.SecurityUtil;
 
 import java.net.InetSocketAddress;
 import java.util.logging.Logger;
@@ -87,6 +88,6 @@ public class TCPClient {
 
     public void sendMessage(MessageDTO messageDTO){
         System.out.println("===channel in sendMsg" + channel);
-        channel.writeAndFlush(Unpooled.copiedBuffer(GsonUtil.getInstance().toJson(messageDTO), CharsetUtil.UTF_8));
+        channel.writeAndFlush(Unpooled.copiedBuffer(SecurityUtil.encode(GsonUtil.getInstance().toJson(messageDTO)), CharsetUtil.UTF_8));
     }
 }

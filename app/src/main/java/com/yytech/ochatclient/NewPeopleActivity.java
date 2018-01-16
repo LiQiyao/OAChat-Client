@@ -133,7 +133,7 @@ public class NewPeopleActivity extends AppCompatActivity {
             map = new HashMap<String, Object>();
             map.put("toUserId",addFriendRequestList.get(i).getToUserId());
             map.put("fromUserId",addFriendRequestList.get(i).getFromUserId());
-            map.put("imgid", heads[Integer.parseInt(addFriendRequestList.get(i).getFromNickName())-1]);
+            map.put("imgid", heads[Integer.parseInt(String.valueOf(addFriendRequestList.get(i).getFromUserId()))-1]);
             map.put("nickname", addFriendRequestList.get(i).getFromNickName());
             map.put("gender", addFriendRequestList.get(i).getFromGender());
             map.put("accepted",addFriendRequestList.get(i).getAccepted());

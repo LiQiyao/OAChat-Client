@@ -4,11 +4,11 @@ package com.yytech.ochatclient.util;
  * @author Lee
  * @date 2018/1/14
  */
-public class SecretUtil {
+public class SecurityUtil {
 
     private static final int offset = 1;
 
-    private SecretUtil(){}
+    private SecurityUtil(){}
 
     public static String encode(String s){
         StringBuilder sb = new StringBuilder();

@@ -91,7 +91,9 @@ public class ChatAdapter extends BaseAdapter {
                     //图片处理
                     if (str.substring(i).equals(".png") || str.substring(i).equals(".jpg")||
                             str.substring(i).equals(".bmp") || str.substring(i).equals(".tiff")||
-                            str.substring(i).equals(".gif") || str.substring(i).equals(".pcd")){
+                            str.substring(i).equals(".gif")  || str.substring(i).equals(".pcd")|| str.substring(i).equals(".PNG")
+                            || str.substring(i).equals(".JPG")|| str.substring(i).equals(".GIF")|| str.substring(i).equals(".BMP")
+                            || str.substring(i).equals(".PCD")|| str.substring(i).equals(".TIFF")){
                         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.chat_right);
                         layout.setBackgroundResource(R.drawable.pop_bg);
                         ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
@@ -189,7 +191,9 @@ public class ChatAdapter extends BaseAdapter {
                     //图片处理
                     if (str1.substring(i).equals(".png") || str1.substring(i).equals(".jpg")||
                             str1.substring(i).equals(".bmp") || str1.substring(i).equals(".tiff")||
-                            str1.substring(i).equals(".gif") || str1.substring(i).equals(".pcd")) {
+                            str1.substring(i).equals(".gif") || str1.substring(i).equals(".pcd")|| str1.substring(i).equals(".PNG")
+                            || str1.substring(i).equals(".JPG")|| str1.substring(i).equals(".GIF")|| str1.substring(i).equals(".BMP")
+                            || str1.substring(i).equals(".PCD")|| str1.substring(i).equals(".TIFF")) {
                         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.chat_left);
                         layout.setBackgroundResource(R.drawable.pop_bg);
                         File file = new File(getSDPath() + "/OAChat/DownLoad/" + str1.substring(j));

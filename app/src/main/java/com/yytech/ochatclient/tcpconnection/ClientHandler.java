@@ -9,6 +9,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.yytech.ochatclient.resolver.DataResolverProxy;
+import com.yytech.ochatclient.util.SecurityUtil;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -25,7 +26,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
         byteBuf.readBytes(req);
         String messageString = new String(req);*/
         Log.i(tag,""+msg.toString());
-        DataResolverProxy.getInstance().doAction(msg.toString());
+        DataResolverProxy.getInstance().doAction(SecurityUtil.decode(msg.toString()));
 
     }
 
@@ -39,8 +40,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
     protected void channelRead0(ChannelHandlerContext ctx, String msg)
             throws Exception {
         Log.d("MyHelloClientHandler", "===channelRead0->msg=" + msg);
-        System.out.println("===msg" + msg);
-        DataResolverProxy.getInstance().doAction(msg);
+        System.out.println("===msg decode" + msg);
+        DataResolverProxy.getInstance().doAction(SecurityUtil.decode(msg));
         /*Message message = new Message();
         message.what = MainActivity.MSG_REC;
         message.obj = msg;

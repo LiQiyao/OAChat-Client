@@ -10,9 +10,10 @@ import java.io.File;
 
 public class Const {
 
-    public static final String IP = "172.18.16.141";
+    public static final String IP = "120.78.67.51";
+    public static final String ftpHost="120.78.67.51";
 //    public static final String IP = "172.18.16.141";
-    public static final String ftpHost="172.18.16.141";
+//    public static final String ftpHost="172.18.16.141";
     public static final int ftpPort=21;
     public static final String ftpUser="anonymous";
     public static final String ftpPwd="abc@abc.com";
@@ -29,7 +30,8 @@ public class Const {
 
     }
 
-    public static final int HTTP_PORT = 8088;
+    public static final int HTTP_PORT = 8080;
+//    public static final int HTTP_PORT = 8088;
 
     public interface Status{
         int SUCCESS = 1;

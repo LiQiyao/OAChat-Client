@@ -1,45 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF"
     android:focusable="true"
     android:focusableInTouchMode="true"
     >
 
-    <ImageView
-        android:layout_marginTop="5dp"
-        android:id="@+id/imageView4"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/search"
-        android:layout_alignBottom="@+id/editText" />
-
-    <EditText
-        android:layout_marginTop="5dp"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:background="#E5E5E5"
-        android:id="@+id/editText"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView4"
-        android:layout_toEndOf="@+id/imageView4" />
-
-    <ImageView
-        android:id="@+id/imageView5"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_alignTop="@+id/imageView4"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_toEndOf="@+id/editText"
-        android:layout_toRightOf="@+id/editText"
-        android:src="@drawable/clean" />
-</RelativeLayout>
+    <TextView
+        android:background="#eeeeee"
+        android:layout_margin="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="27dp"
+        android:gravity="center"
+        android:text="搜索"
+        />
+</LinearLayout>

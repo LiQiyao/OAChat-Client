@@ -51,6 +51,8 @@ public class MainActivity extends FragmentActivity {
     private Intent intent;
     private RelativeLayout mainContentLayout;
     private int tab;
+    private android.support.v4.app.FragmentManager manager;
+    private FragmentTransaction transaction;
 
 
     @Override
@@ -195,8 +197,8 @@ public class MainActivity extends FragmentActivity {
         ImageView contacts= (ImageView) findViewById(R.id.contacts_pic);
         ImageView install = (ImageView) findViewById(R.id.somethingelse);
         TextView tag= (TextView) findViewById(R.id.tab);
-        android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
+        manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
         if(i==0){
             tab=0;
             message.setImageResource(R.mipmap.icon_message_press);
@@ -209,7 +211,7 @@ public class MainActivity extends FragmentActivity {
             bundle.putSerializable("userInfo",userInfo);
             fragment.setArguments(bundle);
             transaction.replace(R.id.main_relative, fragment);
-            transaction.commit();
+            transaction.commitAllowingStateLoss();
             System.out.println("===loginMsg" + i);
         }
         if(i==1){

@@ -66,7 +66,8 @@ public class ChatListAdapter extends BaseAdapter {
                 lastMsg.setText("[文件]");
                 if (content.contains(".")) {
                     if (content.contains(".png")||content.contains(".jpg")||content.contains(".bmp")||content.contains(".tiff")
-                            ||content.contains(".gif")||content.contains(".pcd"))
+                            ||content.contains(".gif")||content.contains(".pcd")||content.contains(".JPG")||content.contains(".BMP")||content.contains(".TIFF")
+                            ||content.contains(".GIF")||content.contains(".PCD")||content.contains(".PNG"))
                         lastMsg.setText("[图片]");
                 }
             }
