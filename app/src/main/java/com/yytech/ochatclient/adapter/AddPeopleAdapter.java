@@ -111,8 +111,9 @@ public class AddPeopleAdapter extends BaseAdapter implements Const.Status{
                                 addRequestMsg.setUserId(loginMsg.getUserId());
 
                                 System.out.println("====addRequestMsg" + addRequestMsg);
-
-                                TCPClient.getInstance().connect();
+                                if (TCPClient.getInstance().getChannel()==null) {
+                                    TCPClient.getInstance().connect();
+                                }
 
                                 TCPClient.getInstance().sendMessage(addRequestMsg);
                                 System.out.println("=====发送好友请求成功");

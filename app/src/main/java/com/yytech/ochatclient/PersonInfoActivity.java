@@ -129,6 +129,7 @@ public class PersonInfoActivity extends AppCompatActivity implements Const.Statu
 
                                 System.out.println("====addRequestMsg" + addRequestMsg);
                                 if(TCPClient.getInstance().getChannel()==null) {
+                                    Log.i("TPClicent=null+22","");
                                     TCPClient.getInstance().connect();
                                 }
                                 TCPClient.getInstance().sendMessage(addRequestMsg);
@@ -158,7 +159,10 @@ public class PersonInfoActivity extends AppCompatActivity implements Const.Statu
                                 delFriendReqMsg.setUserId(userId);
 
                                 System.out.println("====delFriendReqMsg" + delFriendReqMsg);
-                                TCPClient.getInstance().connect();
+                                if(TCPClient.getInstance().getChannel()==null) {
+                                    Log.i("TPClicent=null+11","");
+                                    TCPClient.getInstance().connect();
+                                }
                                 TCPClient.getInstance().sendMessage(delFriendReqMsg);
                                 System.out.println("=====发送删除好友请求成功");
                             } catch (Exception e) {

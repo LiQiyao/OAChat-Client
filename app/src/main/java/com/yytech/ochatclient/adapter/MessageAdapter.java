@@ -90,8 +90,9 @@ public class MessageAdapter extends BaseAdapter{
                     addFriendResponseDTO.setToUserId((Long) data.get(position).get("toUserId"));
                     addFriendResponseDTO.setFromUserId((Long) data.get(position).get("fromUserId"));
                     logger.info("====messageAdapter的data："+data+" === toUserId:"+data.get(position).get("toUserId"));
-
-                    TCPClient.getInstance().connect();
+                    if (TCPClient.getInstance().getChannel()==null) {
+                        TCPClient.getInstance().connect();
+                    }
                     TCPClient.getInstance().sendMessage(addResponseMsg);
                     System.out.println("====发送接受对方的好友请求：【"+addResponseMsg+"】");
 
