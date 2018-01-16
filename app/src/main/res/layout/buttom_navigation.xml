@@ -12,21 +12,21 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         >
         <ImageView
             android:id="@+id/message_pic"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:src="@mipmap/icon_message_press"
-            android:layout_alignParentTop="true"/>
+            android:layout_alignParentTop="true"
+            />
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="消  息"
             android:layout_below="@+id/message_pic"
-            android:layout_marginTop="3dp"
             android:textSize="12sp"
             />
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         >
         <ImageView
             android:id="@+id/contacts_pic"
@@ -48,40 +48,42 @@
             android:layout_centerHorizontal="true" />
         <TextView
             android:text="联系人"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/contacts_pic"
-            android:layout_alignLeft="@+id/contacts_pic"
-            android:layout_alignStart="@+id/contacts_pic"
-            android:id="@+id/textView5" />
+            android:id="@+id/contact_text"
+            android:textSize="12sp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:layout_marginLeft="1dp"
+            />
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/installs"
-        android:layout_width="wrap_content"
+        android:id="@+id/set"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentRight="true"
         >
+        <ImageView
+        android:id="@+id/somethingelse"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/icon_set_normal"
+        android:layout_alignParentRight="true"
+/>
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/set_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/somethingelse"
             android:layout_alignStart="@+id/somethingelse"
             android:layout_below="@+id/somethingelse"
-            android:text="设 置" />
-
-
-        <ImageView
-            android:id="@+id/somethingelse"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/icon_set_normal"
-            android:layout_marginRight="40dp"
-            android:layout_marginEnd="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:text="设 置"
+            android:textSize="12sp"
+            android:layout_marginLeft="1dp"
+            />
     </RelativeLayout>
-
 </RelativeLayout>

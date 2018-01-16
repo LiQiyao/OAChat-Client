@@ -11,4 +11,6 @@
     <color name="text_color_press">#5ffcff</color>
     <color name="main_menu_textclick_bg">#37bae9</color>
     <color name="main_menu_normal">#0db8f6</color>
+    <color name="text_normal">#8a8a8a</color>
+    <color name="text_press">#1296db</color>
 </resources>

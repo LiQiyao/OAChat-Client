@@ -205,10 +205,16 @@ public class MainActivity extends FragmentActivity {
         ImageView contacts= (ImageView) findViewById(R.id.contacts_pic);
         ImageView install = (ImageView) findViewById(R.id.somethingelse);
         TextView tag= (TextView) findViewById(R.id.tab);
+        TextView messageText= (TextView) findViewById(R.id.message_text);
+        TextView contactText= (TextView) findViewById(R.id.contact_text);
+        TextView setText= (TextView) findViewById(R.id.set_text);
         manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
         if(i==0){
             tab=0;
+            messageText.setTextColor(getResources().getColor(R.color.text_press));
+            contactText.setTextColor(getResources().getColor(R.color.text_normal));
+            setText.setTextColor(getResources().getColor(R.color.text_normal));
             message.setImageResource(R.mipmap.icon_message_press);
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_normal);
@@ -227,6 +233,9 @@ public class MainActivity extends FragmentActivity {
             message.setImageResource(R.mipmap.icon_message_normal);
             contacts.setImageResource(R.mipmap.icon_contact_press);
             install.setImageResource(R.mipmap.icon_set_normal);
+            messageText.setTextColor(getResources().getColor(R.color.text_normal));
+            contactText.setTextColor(getResources().getColor(R.color.text_press));
+            setText.setTextColor(getResources().getColor(R.color.text_normal));
 //            tag.setText("联系人");
             FContactList fragment= new FContactList();
             Bundle bundle = new Bundle();
@@ -242,6 +251,9 @@ public class MainActivity extends FragmentActivity {
             message.setImageResource(R.mipmap.icon_message_normal);
             contacts.setImageResource(R.mipmap.icon_contact_normal);
             install.setImageResource(R.mipmap.icon_set_press);
+            messageText.setTextColor(getResources().getColor(R.color.text_normal));
+            contactText.setTextColor(getResources().getColor(R.color.text_normal));
+            setText.setTextColor(getResources().getColor(R.color.text_press));
 //            tag.setText("设置");
             FEditPersonInfo fragment= new FEditPersonInfo();
             Bundle bundle = new Bundle();
