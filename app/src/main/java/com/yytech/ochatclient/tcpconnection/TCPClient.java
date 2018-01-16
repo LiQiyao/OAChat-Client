@@ -84,10 +84,15 @@ public class TCPClient {
 
     public void disConnect(){
         group.shutdownGracefully();
+        channel = null;
     }
 
     public void sendMessage(MessageDTO messageDTO){
         System.out.println("===channel in sendMsg" + channel);
         channel.writeAndFlush(Unpooled.copiedBuffer(SecurityUtil.encode(GsonUtil.getInstance().toJson(messageDTO)), CharsetUtil.UTF_8));
+    }
+
+    public Channel getChannel() {
+        return channel;
     }
 }

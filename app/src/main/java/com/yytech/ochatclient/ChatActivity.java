@@ -179,8 +179,10 @@ public class ChatActivity extends Activity {
             public void handleMessage(Message msg) {
                 if (msg.what == 0x789) {
                     newChatLog = (ChatLog) msg.obj;
-                    chatLogs.add(newChatLog);
-                    chatAdapter.notifyDataSetChanged();
+                    if(newChatLog.getSenderId().equals(friendId)) {
+                        chatLogs.add(newChatLog);
+                        chatAdapter.notifyDataSetChanged();
+                    }
                 }
             }
         };

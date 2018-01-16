@@ -148,7 +148,9 @@ public class LoginActivity extends AppCompatActivity implements Const.Status{
                                     sendOnlineMsg.setData(new OnlineDTO());
                                     System.out.println("======---" + sendOnlineMsg);
                                     //发送
-                                    TCPClient.getInstance().connect();
+                                    if (TCPClient.getInstance().getChannel()==null) {
+                                        TCPClient.getInstance().connect();
+                                    }
                                     Thread.sleep(500);
                                     TCPClient.getInstance().sendMessage(sendOnlineMsg);
                                 }

@@ -85,7 +85,9 @@ public class FirstActivity extends AppCompatActivity {
             sendOnlineMsg.setData(new OnlineDTO());
             System.out.println("======---" + sendOnlineMsg);
             //发送
-            TCPClient.getInstance().connect();
+            if (TCPClient.getInstance().getChannel()==null) {
+                TCPClient.getInstance().connect();
+            }
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
