@@ -18,6 +18,7 @@ import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.LoginResultDTO;
 import com.yytech.ochatclient.dto.data.UserInfo;
+import com.yytech.ochatclient.tcpconnection.TCPClient;
 import com.yytech.ochatclient.util.GsonUtil;
 import com.yytech.ochatclient.util.LocalUtil;
 
@@ -219,6 +220,7 @@ public class FEditPersonInfo extends Fragment implements Const.Status{
                             e.printStackTrace();
                         }
                         finally {
+                            TCPClient.getInstance().disConnect();
                             conn.disconnect();
                         }
                     }
