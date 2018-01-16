@@ -2,6 +2,7 @@ package com.yytech.ochatclient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,14 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
 import com.yytech.ochatclient.tcpconnection.TCPClient;
 
 public class FirstActivity extends AppCompatActivity {
-
-
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
     ImageView loginImage;
@@ -52,6 +52,7 @@ public class FirstActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.activity_first);
 
 

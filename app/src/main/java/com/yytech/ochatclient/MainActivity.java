@@ -3,6 +3,7 @@ package com.yytech.ochatclient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
@@ -20,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.google.gson.reflect.TypeToken;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.MessageDTO;
@@ -61,8 +63,7 @@ public class MainActivity extends FragmentActivity {
         intent=getIntent();
         onlineMsg= (MessageDTO<OnlineDTO>) intent.getSerializableExtra("onlineMsg");
         System.out.println("===onlineMsg" + onlineMsg);
-
-
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         super.onCreate(savedInstanceState);
 
 

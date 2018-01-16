@@ -2,11 +2,13 @@ package com.yytech.ochatclient;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.dto.MessageDTO;
 import com.yytech.ochatclient.dto.data.DeleteFriendSuccessDTO;
 import com.yytech.ochatclient.dto.data.OnlineDTO;
@@ -19,6 +21,7 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         setContentView(R.layout.activity_news);
 
         new Thread(new Runnable() {

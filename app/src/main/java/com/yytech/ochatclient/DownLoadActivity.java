@@ -1,22 +1,20 @@
 package com.yytech.ochatclient;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.githang.statusbar.StatusBarCompat;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.util.CallOtherOpeanFile;
 import com.yytech.ochatclient.util.MyFTPUtil;
@@ -68,7 +66,7 @@ public class DownLoadActivity extends Activity {
         Intent intent=getIntent();
         ftpFileName=intent.getStringExtra("ftpFileName");
         strLocalFile=intent.getStringExtra("strLocalFile");
-        path=path;
+        StatusBarCompat.setStatusBarColor(this, Color.WHITE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download);
         back= (ImageView) findViewById(R.id.back);

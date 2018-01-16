@@ -27,7 +27,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     compile group: 'commons-net', name: 'commons-net', version: '3.0.1'
 
-
+    compile 'com.githang:status-bar-compat:latest.integration'
     compile 'com.ruffian.library:RTextView:1.0.3'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
