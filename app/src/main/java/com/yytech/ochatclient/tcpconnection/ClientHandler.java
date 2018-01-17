@@ -62,6 +62,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("===Client close ");
         super.channelInactive(ctx);
+        TCPClient.getInstance().disConnect();
         TCPClient.getInstance().setChannel(null);
     }
 

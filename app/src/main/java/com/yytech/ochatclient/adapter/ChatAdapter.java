@@ -19,6 +19,7 @@ import com.yytech.ochatclient.DownLoadActivity;
 import com.yytech.ochatclient.R;
 import com.yytech.ochatclient.common.Const;
 import com.yytech.ochatclient.dto.data.ChatLog;
+import com.yytech.ochatclient.util.BitmapCache;
 import com.yytech.ochatclient.util.MyFTPUtil;
 
 import java.io.File;
@@ -36,6 +37,7 @@ public class ChatAdapter extends BaseAdapter {
     private String myIcon;
     private String friendIcon;
     private List<ChatLog> chatLogs;
+    private BitmapCache bitmapCache=new BitmapCache();
     private int[] heads=new int[]{R.drawable.img1,R.drawable.img2,R.drawable.img3,R.drawable.img4,R.drawable.img5,R.drawable.img6,R.drawable.img7,R.drawable.img8};
     public ChatAdapter(Context context, List<ChatLog> chatLogs,Long myId,String myIcon,String friendIcon) {
         super();
@@ -76,7 +78,12 @@ public class ChatAdapter extends BaseAdapter {
             view=View.inflate(context, R.layout.item_chat_right, null);
             TextView msgTime= (TextView) view.findViewById(R.id.message_time);
             ImageView head= (ImageView) view.findViewById(R.id.head);
-            head.setImageResource(heads[Integer.parseInt(myIcon)-1]);
+            if (bitmapCache.getBitmap(heads[Integer.parseInt(myIcon)-1],context)!=null) {
+                head.setImageBitmap(bitmapCache.getBitmap(heads[Integer.parseInt(myIcon) - 1], context));
+            }
+            else {
+                head.setImageResource(heads[Integer.parseInt(friendIcon)-1]);
+            }
             SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");
             Date date=new Date(chatLog.getSendTime());
             System.out.println("===date"+chatLog.getSendTime());
@@ -126,6 +133,7 @@ public class ChatAdapter extends BaseAdapter {
                         ((TextView) view.findViewById(R.id.tv_me_chat_message)).setText(str.substring(j));
                         ImageView imageView = (ImageView) view.findViewById(R.id.chat_image);
                         imageView.setImageResource(R.drawable.file);
+//                        imageView.setImageBitmap(bitmapCache.getBitmap(R.drawable.file,context));
                         RelativeLayout.LayoutParams params;
                         params= (RelativeLayout.LayoutParams) imageView.getLayoutParams();
                         params.height=300;
@@ -178,7 +186,12 @@ public class ChatAdapter extends BaseAdapter {
             view=View.inflate(context,R.layout.item_chat_left,null);
             TextView msgTime= (TextView) view.findViewById(R.id.message_time);
             ImageView head= (ImageView) view.findViewById(R.id.head);
+            if (bitmapCache.getBitmap(heads[Integer.parseInt(friendIcon)-1],context)!=null) {
+                head.setImageBitmap(bitmapCache.getBitmap(heads[Integer.parseInt(friendIcon) - 1], context));
+            }
+            else {
             head.setImageResource(heads[Integer.parseInt(friendIcon)-1]);
+            }
             SimpleDateFormat lsdFormat = new SimpleDateFormat("MM-dd HH:mm");
             Date date=new Date(chatLog.getSendTime());
             String lStrDate = lsdFormat.format(date);
@@ -305,7 +318,8 @@ private Bitmap getDiskBitmap(String pathString)
         File file = new File(pathString);
         if(file.exists())
         {
-            bitmap = BitmapFactory.decodeFile(pathString);
+            bitmap=bitmapCache.getBitmapByPath(pathString,context);
+//            bitmap = BitmapFactory.decodeFile(pathString);
         }
     } catch (Exception e)
     {
